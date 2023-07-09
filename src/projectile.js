@@ -19,6 +19,7 @@ export class Projectile {
         this.type = type
         this.clientX = clientX
         this.clientY = clientY
+        this.direction = 1
 
     }
     
@@ -26,8 +27,8 @@ export class Projectile {
         cvx.beginPath()
         cvx.fillStyle = this.color
         cvx.arc(this.x, this.y, this.r, 0, 2*Math.PI)
-        this.x+=this.velocity.x * this.speed
-        this.y+=this.velocity.y * this.speed
+        this.x+=this.velocity.x * this.speed * this.direction
+        this.y+=this.velocity.y * this.speed * this.direction
         cvx.fill()
     }
 

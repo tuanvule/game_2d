@@ -94,6 +94,21 @@ function animation() {
                 particles.push(new Particles(projectile.x, projectile.y, 3, 'red', Math.random() - 0.5, Math.random() - 0.5, 20))
             }
         }
+        if(projectile.x + projectile.r <= player.sw_x + player.sw_w && 
+            projectile.x + projectile.r >= player.sw_x &&
+            projectile.y + projectile.r >= player.sw_y &&
+            projectile.y <= player.sw_y + player.sw_h 
+            ) {
+            // console.log('asaaaa')
+            if(type === 'explosion') {
+                for(var i = 0; i <= 10; i++) {
+                    particles.push(new Particles(projectile.x, projectile.y, 3, 'red', Math.random() - 0.5, Math.random() - 0.5, 20))
+                    projectiles.splice(index, 1)
+                }
+            } else {
+                projectile.direction = -1
+            }
+        }
     })
 
     particles.forEach((particle, index) => {
@@ -122,12 +137,6 @@ function animation() {
     if(platforms.length > 1) {
         platforms.splice(0, 1)
     }
-    // enermies.attack({x: player.x, y:player.y})
-    // console.log(particles)dw
-    // console.log({
-    //     projectiles: projectiles.length,
-    //     particles:  particles.length,
-    // })
     requestAnimationFrame(animation)
 }
 

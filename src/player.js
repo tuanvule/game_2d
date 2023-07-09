@@ -18,14 +18,24 @@ export class Player {
             jump: false
         }
         this.isTouching = false
+        this.isSpawnSoundWave = false
+        this.sw_w = 0
+        this.sw_h = 150
+        this.sw_x = this.x+this.w*2
+        this.sw_y = this.y + this.h/2 - 75
+        this.delay = 0
     }
     
     draw() {
         cvx.fillStyle = 'blue'
         cvx.fillRect(this.x, this.y, this.w, this.h)
+        if(this.isSpawnSoundWave) {
+            this.spawnSoundWave()
+        }
     }
 
     update() {
+        this.delay++
         if(this.y + this.velocity.y<=innerHeight-this.h && !this.isTouching) {
             this.y += this.velocity.y
 
@@ -43,6 +53,19 @@ export class Player {
             this.velocity.x=0
         }
         this.x += this.velocity.x
+
+        if(this.isSpawnSoundWave && this.sw_w <= 20) {
+            this.sw_w+=10
+        }
+        if(this.delay >= 150) {
+            this.isSpawnSoundWave = false
+            this.sw_w = 0
+            this.delay = 0
+        }
+
+        this.sw_x = this.x+this.w*2
+        this.sw_y = this.y + this.h/2 - 75
+
         this.draw()
     }
 
@@ -65,6 +88,11 @@ export class Player {
                     this.isTouching = false 
                     // this.actions.jump = true
                     // console.log(this.velocity.y)
+                    break
+                case 'q':
+                    if(!this.isSpawnSoundWave) {
+                        this.isSpawnSoundWave = true
+                    }
                     break
                 default :
                     this.velocity = {
@@ -110,5 +138,12 @@ export class Player {
         return {
             px, pw, py, ph
         }
+    }
+
+    spawnSoundWave() {
+        const img = new Image()
+        img.src = '../texture/soundwave.png'
+
+        cvx.drawImage(img, 0, 0, 100, 200, this.sw_x, this.sw_y, this.sw_w, this.sw_h)
     }
 }

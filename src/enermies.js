@@ -78,25 +78,6 @@ export class Enermies {
         }
     }
     attack({w,h, x, y}) {
-        // console.log(first)
-        // console.log(new Particles())
-        // console.log(this.attack_velocity)
-        // const angle = Math.atan2(
-        //     y - this.y,
-        //     x - this.x
-        // )
-
-        // this.attack_velocity = {
-        //     x: Math.cos(angle),
-        //     y: Math.sin(angle)
-        // }
-
-        // cvx.beginPath()
-        // cvx.fillStyle = 'red'
-        // cvx.arc(this.attack_position.x, this.attack_position.y, this.attack_r, 0, 2*Math.PI)
-        // this.attack_position.x+=this.attack_velocity.x * this.attack_speed
-        // this.attack_position.y+=this.attack_velocity.y * this.attack_speed
-        // cvx.fill()
         this.delay+=1
 
         if(!this.isLaserAttack) {
