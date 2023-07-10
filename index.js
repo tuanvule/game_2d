@@ -3,8 +3,18 @@ import { Particles } from "./src/particle.js";
 import { Player } from "./src/player.js";
 import { Projectile } from "./src/projectile.js";
 
+const $ = document.querySelector.bind(document)
+
 const cv = document.querySelector('#canvas')
 const cvx = cv.getContext('2d')
+
+const moveLeft = $('.move_left')
+const moveRight = $('.move_right')
+const jump = $('.jump')
+const shield = $('.shield')
+const spawnPlatfom = $('.spawnPlatfom')
+
+console.log(moveLeft, moveRight, jump, shield)
 
 cv.width = innerWidth
 cv.height = innerHeight
@@ -29,6 +39,40 @@ const enermies = new Enermies()
 
 let explosionRare = 0
 let laserRare = 0
+
+
+moveLeft.ontouchstart = () => {
+    player.action('a', 'keydown')
+}
+moveRight.ontouchstart = () => {
+    player.action('d', 'keydown')
+}
+jump.ontouchstart = () => {
+    player.action('w', 'keydown')
+}
+shield.ontouchstart = () => {
+    player.action('q', 'keydown')
+}
+spawnPlatfom.ontouchstart = () => {
+    platforms.push(player.spawnPlatform())
+
+}
+
+moveLeft.ontouchend = () => {
+    player.action('a', 'keyup')
+}
+moveRight.ontouchend = () => {
+    player.action('d', 'keyup')
+}
+jump.ontouchend = () => {
+    player.action('w', 'keyup')
+}
+shield.ontouchend = () => {
+    player.action('q', 'keyup')
+}
+// spawnPlatfom.ontouchend = () => {
+//     player.action('e', 'keyup')
+// }
 
 setInterval(() => {
     explosionRare++
