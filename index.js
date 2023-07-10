@@ -33,7 +33,7 @@ let laserRare = 0
 setInterval(() => {
     explosionRare++
     laserRare++
-    if(explosionRare % 3 ===0) {
+    if(explosionRare % 5 ===0) {
         const projectile = new Projectile(enermies.x, enermies.y, 10, 'red', (player.x+(player.w/2)), (player.y+(player.h/2)), 10)
         projectiles.push({projectile: projectile, type: 'explosion'})
     } else {
@@ -43,9 +43,7 @@ setInterval(() => {
     if(laserRare % 6 === 0) {
         // laser attack
         enermies.isLaserAttack = false
-        console.log('asd')
     }
-    console.log(laserRare)
 }, 700);
 
 
@@ -113,7 +111,7 @@ function animation() {
 
     particles.forEach((particle, index) => {
         particle.update()
-        if(particle.isOfscreen() || particles >=10) {
+        if(particle.isOfscreen() || particles.length >=10) {
             particles.splice(index, 1)
         }
     })
