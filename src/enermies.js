@@ -5,8 +5,8 @@ const cvx = cv.getContext('2d')
 
 export class Enermies {
     constructor() {
-        this.w = 400
-        this.h = 400
+        this.w = innerWidth / 5
+        this.h = innerWidth / 5
         this.x = cv.width - this.w
         this.y = cv.height - this.h
         this.hp_x = 200
