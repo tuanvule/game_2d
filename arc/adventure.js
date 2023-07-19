@@ -14,7 +14,7 @@ const cvx = cv.getContext('2d')
 // const player = new Player(100, 200, 'red')
 const players = {}
 
-const socket = io.connect('http://localhost:4000/', {
+const socket = io.connect('https://multiplayergame-server.vercel.app/', {
     allowRequest: (req, callback) => {
         const noOriginHeader = req.headers.origin === undefined;
         callback(null, noOriginHeader);
