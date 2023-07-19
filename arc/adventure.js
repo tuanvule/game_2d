@@ -70,13 +70,16 @@ setInterval(() => {
     //     console.log(id)
     //     console.log(players[id])
     // }
-    socket.emit('updatePlayers', {
+    console.log(players[socket.id])
+    if(players[socket.id]) {
+        socket.emit('updatePlayers', {
             [socket.id]: {
                 x: players[socket.id].x,
                 y: players[socket.id].y,
                 color: players[socket.id].color
             }
         })
+    }
 }, 15)
 
 
