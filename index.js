@@ -1,185 +1,92 @@
+import { adventure } from "./arc/adventure.js";
+import { bossFight } from "./arc/boss-fight.js";
 import { Enermies } from "./src/enermies.js";
 import { Particles } from "./src/particle.js";
 import { Player } from "./src/player.js";
 import { Projectile } from "./src/projectile.js";
+
+// ----setting----
+
+// let setting = {
+//     device: '',
+// }
+
+// let saveSetting
 
 const $ = document.querySelector.bind(document)
 
 const cv = document.querySelector('#canvas')
 const cvx = cv.getContext('2d')
 
-const moveLeft = $('.move_left')
-const moveRight = $('.move_right')
-const jump = $('.jump')
-const shield = $('.shield')
-const spawnPlatfom = $('.spawnPlatfom')
-
-console.log(moveLeft, moveRight, jump, shield)
+const movementBody = $('.movement-body')
 
 cv.width = innerWidth
 cv.height = innerHeight
 
-// console.log(cvx)
-let projectiles = []
-let platforms = []
-let enermiesAttacks = []
-let particles = []
-
-const player = new Player()
-const enermies = new Enermies()
-// let action = {
-//     left: false,
-//     right: false,
-//     jump: false
-// }
-
-// function () {
-
-// }
-
-let explosionRare = 0
-let laserRare = 0
-
-
-moveLeft.ontouchstart = () => {
-    player.action('a', 'keydown')
-}
-moveRight.ontouchstart = () => {
-    player.action('d', 'keydown')
-}
-jump.ontouchstart = () => {
-    player.action('w', 'keydown')
-}
-shield.ontouchstart = () => {
-    player.action('q', 'keydown')
-}
-spawnPlatfom.ontouchstart = () => {
-    platforms.push(player.spawnPlatform())
-
-}
-
-moveLeft.ontouchend = () => {
-    player.action('a', 'keyup')
-}
-moveRight.ontouchend = () => {
-    player.action('d', 'keyup')
-}
-jump.ontouchend = () => {
-    player.action('w', 'keyup')
-}
-shield.ontouchend = () => {
-    player.action('q', 'keyup')
-}
-// spawnPlatfom.ontouchend = () => {
-//     player.action('e', 'keyup')
-// }
-
-setInterval(() => {
-    explosionRare++
-    laserRare++
-    if(explosionRare % 5 ===0) {
-        const projectile = new Projectile(enermies.x, enermies.y, 10, 'red', (player.x+(player.w/2)), (player.y+(player.h/2)), 10)
-        projectiles.push({projectile: projectile, type: 'explosion'})
-    } else {
-        const projectile = new Projectile(enermies.x, enermies.y, 20, 'red', (player.x+(player.w/2)), (player.y+(player.h/2)), 5)
-        projectiles.push({projectile: projectile, type: 'normal'})
-    }
-    if(laserRare % 6 === 0) {
-        // laser attack
-        enermies.isLaserAttack = false
-    }
-}, 700);
-
-
-window.onkeydown = ({key}) => {
-    player.action(key, 'keydown')
-    if(key === 'e') {
-        // console.log(player.spawnPlatform())
-        platforms.push(player.spawnPlatform())
-    }
-}
-
-// window.onkeydown = ({key}) => {
-//     player.action(key, 'keydown')
-// }
-
-window.onkeyup = ({key}) => {
-    player.action(key, 'keyup')
-}
-
-window.onclick = ({clientX, clientY}) => {
-    const projectile = new Projectile((player.x+(player.w/2)), (player.y+(player.h/2)), 20, 'blue', clientX, clientY, 5)
-    projectiles.push({projectile: projectile, position: {clientX, clientY}})
-}
-
 function animation() {
     cvx.clearRect(0, 0, innerWidth, innerHeight)
-    enermies.draw(player)
-    player.update()
+    // bossFight()
+    adventure()
 
-    projectiles.forEach(({projectile, type}, index) => {
-        projectile.update()
-        if(enermies.ishited(projectile, type)) {
-            enermies.update()
-            projectiles.splice(index, 1)
-        }
-        // enermies.ishited(projectile) 
-        if(projectile.isOfscreen() || projectiles.length >=10) {
-            projectiles.splice(index, 1)
-        }
-        if(type === 'explosion' && 
-            (projectile.x + projectile.r >= innerWidth ||
-            projectile.x - projectile.r <= 0 ||
-            projectile.y + projectile.r >= innerHeight ||
-            projectile.y - projectile.r <= 0) ) {
-            for(var i = 0; i <= 10; i++) {
-                particles.push(new Particles(projectile.x, projectile.y, 3, 'red', Math.random() - 0.5, Math.random() - 0.5, 20))
-            }
-        }
-        if(projectile.x + projectile.r <= player.sw_x + player.sw_w && 
-            projectile.x + projectile.r >= player.sw_x &&
-            projectile.y + projectile.r >= player.sw_y &&
-            projectile.y <= player.sw_y + player.sw_h 
-            ) {
-            // console.log('asaaaa')
-            if(type === 'explosion') {
-                for(var i = 0; i <= 10; i++) {
-                    particles.push(new Particles(projectile.x, projectile.y, 3, 'red', Math.random() - 0.5, Math.random() - 0.5, 20))
-                    projectiles.splice(index, 1)
-                }
-            } else {
-                projectile.direction = -1
-            }
-        }
-    })
-
-    particles.forEach((particle, index) => {
-        particle.update()
-        if(particle.isOfscreen() || particles.length >=10) {
-            particles.splice(index, 1)
-        }
-    })
-
-    platforms.forEach(({px, py, pw, ph}) => {
-        if(
-            player.y + player.h <= py &&
-            player.y + player.h + player.velocity.y >= py  &&
-            player.x + player.w >= px &&
-            player.x <= px + pw
-        ) {
-            player.isTouching = true
-        } else {
-            player.isTouching = false
-        }
-
-        cvx.fillStyle = 'blue'
-        cvx.fillRect(px, py, pw, ph)
-    })
-    // console.log(projectiles)
-    if(platforms.length > 1) {
-        platforms.splice(0, 1)
-    }
     requestAnimationFrame(animation)
 }
 
 animation()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function build(saveSetting) {
+    if(saveSetting.device === 'mobile') {
+        movementBody.style.display = 'block'
+        console.log('asd')
+    } else {
+        movementBody.style.display = 'none'
+    }
+}
+
+// menu setting
+// const mobileBtn = $('.menu_choose-device--mobile')
+// const pcBtn = $('.menu_choose-device--pc')
+// const playBtn = $('.play-btn')
+// const screen = $('.screen')
+
+// mobileBtn.onclick = () => {
+//     mobileBtn.style.backgroundColor = 'blue'
+//     mobileBtn.style.color = 'white'
+
+//     pcBtn.style.backgroundColor = 'white'
+//     pcBtn.style.color = 'black'
+
+//     setting.device = 'mobile'
+// }
+
+// pcBtn.onclick = () => {
+//     pcBtn.style.backgroundColor = 'blue'
+//     pcBtn.style.color = 'white'
+
+//     mobileBtn.style.backgroundColor = 'white'
+//     mobileBtn.style.color = 'black'
+
+//     setting.device = 'pc'
+// }
+
+// playBtn.onclick = () => {
+//     saveSetting = setting
+//     console.log(saveSetting)
+//     console.log(Boolean(saveSetting.device))
+//     if(saveSetting.device) {
+//         build(saveSetting)
+//         screen.style.display = 'none'
+//     }
+// }

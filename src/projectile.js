@@ -44,14 +44,4 @@ export class Projectile {
         }
         this.draw()
     }
-
-    isOfscreen() {
-        if(this.x + this.r > innerWidth ||
-            this.x - this.r < 0 ||
-            this.y + this.r > innerHeight ||
-            this.y - this.r < 0
-        ) {
-            return true
-        }
-    }
 }

@@ -10,29 +10,46 @@
 <body>
     <canvas id="canvas"></canvas>
 
-    <div class="movement">
-        <div class="movement_item active move_left"><i class="fa-solid fa-left-long"></i></div>
-        <div class="movement_item active move_right"><i class="fa-solid fa-right-long"></i></div>
-    </div>
-    <div class="movement2">
-        <div>
-            <div class="movement2-item-2 active spawnPlatfom">
-                <div class="player"></div>
-                <div class="line"></div>
-            </div>
+    <div class="movement-body">
+        <div class="movement">
+            <div class="movement_item active move_left"><i class="fa-solid fa-left-long"></i></div>
+            <div class="movement_item active move_right"><i class="fa-solid fa-right-long"></i></div>
         </div>
-        <div class="movement2-item-1">
-            <div class="movement_item active shield"><i class="fa-solid fa-shield-halved"></i></div>
-            <div class="movement_item active jump"><i class="fa-solid fa-up-long"></i></div>
+        <div class="movement2">
+            <div>
+                <div class="movement2-item-2 active spawnPlatfom">
+                    <div class="player"></div>
+                    <div class="line"></div>
+                </div>
+            </div>
+            <div class="movement2-item-1">
+                <div class="movement_item active shield"><i class="fa-solid fa-shield-halved"></i></div>
+                <div class="movement_item active jump"><i class="fa-solid fa-up-long"></i></div>
+            </div>
         </div>
     </div>
 
+    <!-- <div class="screen">
+        <div class="menu">
+            <div class="menu_choose-device">
+                <div class="menu_choose-device--title">Device</div>
+                <div class="menu_choose-device--chosen">
+                    <div class="menu_choose-device--mobile">Mobile</div>
+                    <div class="menu_choose-device--pc">Computer</div>
+                </div>
+            </div>
+            <div class="play-btn">Play</div>
+        </div>
+    </div> -->
 
     <script type="module" src="./index.js"></script>
     <script type="module" src="./src/player.js"></script>
     <script type="module" src="./src/enermies.js"></script>
     <script type="module" src="./src/projectile.js"></script>
     <script type="module" src="./src/particle.js"></script>
-
+    <!-- <script type="module" src="./arc/boss-fight.js"></script> -->
+    <script type="module" src="./util/collide.js"></script>
+    <script type="module" src="./util/movement.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.1/socket.io.js"></script> -->
 </body>
 </html>

@@ -3,6 +3,7 @@
     padding: 0;
     border: 0;
     font-size: 100%;
+    font-family: 'Courier New', Courier, monospace;
 }
 canvas {
     position: fixed;
@@ -11,6 +12,10 @@ canvas {
     right: 0;
     left: 0;
     width: 100%;
+}
+
+.movement-body {
+    display: none
 }
 
 .movement {
@@ -78,4 +83,70 @@ canvas {
     width: 50px;
     height: 15px;
     background: #000;
+}
+
+.screen {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,.4);
+}
+
+.menu {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30%;
+    height: 70%;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.menu_choose-device--title {
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.menu_choose-device {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu_choose-device .menu_choose-device--chosen {
+    font-size: 20px;
+    font-weight: 600;
+    display: flex;
+}
+
+.menu_choose-device .menu_choose-device--chosen div {
+    margin: 10px 20px;
+    padding: 4px 10px;
+    border: 1px solid blue;
+    cursor: pointer;
+}
+
+.menu_choose-device .menu_choose-device--chosen div:hover {
+    background: #eeeeee;
+}
+
+.play-btn {
+    font-size: 30px;
+    font-weight: 600;
+    width: 100px;
+    padding: 4px 10px;
+    border: 1px solid #ccc;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.play-btn:hover {
+    background-color: #eeeeee;
 }
