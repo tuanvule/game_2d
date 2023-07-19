@@ -21,7 +21,6 @@ const socket = io.connect('https://multiplayergame-server.vercel.app/', {
       }
 })
 
-console.log(socket)
 
 // socket.emit('connection', (a) => {
 //     console.log(a)
@@ -72,7 +71,7 @@ setInterval(() => {
     //     console.log(id)
     //     console.log(players[id])
     // }
-    console.log(players[socket.id])
+    console.log(socket)
     if(players[socket.id]) {
         socket.emit('updatePlayers', {
             [socket.id]: {
@@ -101,6 +100,7 @@ const platforms = [
 
 
 setTimeout(() => {
+    console.log(socket)
     movementActive(players[socket.id], socket)
 }, 100)
 
