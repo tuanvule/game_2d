@@ -21,6 +21,8 @@ const socket = io.connect('https://multiplayergame-server.vercel.app/', {
       }
 })
 
+console.log(socket)
+
 // socket.emit('connection', (a) => {
 //     console.log(a)
 // })
