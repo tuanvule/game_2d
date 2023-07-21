@@ -41,7 +41,7 @@ export class Player {
         }
     }
 
-    update(platforms, socket) {
+    update(platforms, enermies) {
         this.delay++
         if(this.y + this.velocity.y<=innerHeight-this.h && !this.isLanding) {
             this.y += this.velocity.y * devicePixelRatio
@@ -75,25 +75,37 @@ export class Player {
         this.sw_x = this.x+this.w*2
         this.sw_y = this.y + this.h/2 - 75
 
-        // if(this.x >= innerWidth - 150 && this.actions.right) {
-        //     console.log('asd')
-        //     platforms.forEach(platform => {
-        //         platform.isMoveLeft = true
-        //     });
-        // } else {
-        //     platforms.forEach(platform => {
-        //         platform.isMoveLeft = false
-        //     });
-        // }
-        // if(this.x <= 150 && this.actions.left) {
-        //     platforms.forEach(platform => {
-        //         platform.isMoveRight = true
-        //     });
-        // } else {
-        //     platforms.forEach(platform => {
-        //         platform.isMoveRight = false
-        //     });
-        // }
+        if(this.x >= innerWidth - 150 && this.actions.right) {
+            console.log('asd')
+            platforms.forEach(platform => {
+                platform.isMoveLeft = true
+            });
+            enermies.forEach(enermie => {
+                enermie.isMoveLeft = true
+            });
+        } else {
+            platforms.forEach(platform => {
+                platform.isMoveLeft = false
+            });
+            enermies.forEach(enermie => {
+                enermie.isMoveLeft = false
+            });
+        }
+        if(this.x <= 150 && this.actions.left) {
+            platforms.forEach(platform => {
+                platform.isMoveRight = true
+            });
+            enermies.forEach(enermie => {
+                enermie.isMoveRight = true
+            });
+        } else {
+            platforms.forEach(platform => {
+                platform.isMoveRight = false
+            });
+            enermies.forEach(enermie => {
+                enermie.isMoveRight = false
+            });
+        }
         
         // if(this.id) {
         //     socket.emit('updatePlayers', {

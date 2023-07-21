@@ -36,8 +36,6 @@ export class Platform {
         }
         if (this.isMoveRight) {
             this.x += 4
-        } else {
-            this.x = this.x
         }
         this.hp = (this.hp_w / (innerWidth - this.hp_x*2)) * 100
         this.draw()

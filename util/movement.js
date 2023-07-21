@@ -8,11 +8,11 @@ const $ = document.querySelector.bind(document)
 
 export function movementActive(player, socket) {
 
-    const keypress = {
-        w: false,
-        a: false,
-        d: false,
-    }
+    // const keypress = {
+    //     w: false,
+    //     a: false,
+    //     d: false,
+    // }
 
     // setInterval(() => {
     //     if(keypress.w) {
@@ -33,10 +33,14 @@ export function movementActive(player, socket) {
     //     }
     // }, 15)
 
-    setInterval(() => {
-        socket.emit('gravity', player.y)
-        socket.emit('moveX', player.x)
-    }, 1)
+// ---------------------------------------------------------
+
+    // if(socket.id) {
+    //     setInterval(() => {
+    //         socket.emit('gravity', player.y)
+    //         socket.emit('moveX', player.x)
+    //     }, 1)
+    // }
 
     // moveLeft.ontouchstart = () => {
     //     player.action('a', 'keydown')
@@ -73,38 +77,38 @@ export function movementActive(player, socket) {
         //     platforms.push(player.spawnPlatform())
         // }
         // console.log('asd')
-        switch (key) {
-            case 'w':
-                keypress[key] = true
-                break;
-            case 'a':
-                keypress[key] = true
-                break;
-            case 'd':
-                keypress[key] = true
-                break;
+        // switch (key) {
+        //     case 'w':
+        //         keypress[key] = true
+        //         break;
+        //     case 'a':
+        //         keypress[key] = true
+        //         break;
+        //     case 'd':
+        //         keypress[key] = true
+        //         break;
         
-            default:
-                break;
-        }
+        //     default:
+        //         break;
+        // }
     }
     
     window.onkeyup = ({key}) => {
         player.action(key, 'keyup')
-        switch (key) {
-            case 'w':
-                keypress[key] = false
-                break;
-            case 'a':
-                keypress[key] = false
-                break;
-            case 'd':
-                keypress[key] = false
-                break;
+        // switch (key) {
+        //     case 'w':
+        //         keypress[key] = false
+        //         break;
+        //     case 'a':
+        //         keypress[key] = false
+        //         break;
+        //     case 'd':
+        //         keypress[key] = false
+        //         break;
         
-            default:
-                break;
-        }
+        //     default:
+        //         break;
+        // }
     }
     
     // window.onclick = ({clientX, clientY}) => {

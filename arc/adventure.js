@@ -1,26 +1,44 @@
-import { io } from "https://cdn.socket.io/4.7.1/socket.io.esm.min.js";
+// import { io } from "https://cdn.socket.io/4.7.1/socket.io.esm.min.js";
+// import {  io } from "socket.io-client";
 import { Particles } from "../src/particle.js";
 import { Platform } from "../src/platform.js";
 import { Player } from "../src/player.js";
 import { Projectile } from "../src/projectile.js";
 import { isCollide } from "../util/collide.js";
 import { movementActive } from "../util/movement.js";
+import { Enermies } from "../src/enermies.js";
 
 const $ = document.querySelector.bind(document)
 
 const cv = document.querySelector('#canvas')
 const cvx = cv.getContext('2d')
 
-// const player = new Player(100, 200, 'red')
-const players = {}
 
-const socket = io.connect('https://multiplayergame-server.vercel.app/', {
-    allowRequest: (req, callback) => {
-        const noOriginHeader = req.headers.origin === undefined;
-        callback(null, noOriginHeader);
-      }
-})
+const player = new Player(100, 200, 'red')
+// const players = {}
 
+// const socket = io('https://multiplayergame-server.vercel.app/', {
+//     // allowRequest: (req, callback) => {
+//         // console.log(req.headers.origin, '===================================')
+//     //     const noOriginHeader = req.headers.origin === undefined;
+//     //     callback(null, noOriginHeader);
+//     // },
+//     // withCredentials: true,
+//     // extraHeaders: {
+//     //     "origin": "http://127.0.0.1:5500"
+//     // },
+//     // serveClient: true,
+//     // transports : ['websocket'],
+//     // rejectUnauthorized: true
+// })
+
+// socket.on("connect_error", (err) => {
+//     console.log(err)
+//     console.log('reconnect')
+    // setTimeout(() => {
+    //     socket.connect();
+    // }, 1000);
+// });
 
 // socket.emit('connection', (a) => {
 //     console.log(a)
@@ -36,52 +54,52 @@ const socket = io.connect('https://multiplayergame-server.vercel.app/', {
 //     console.log(socket.id)
 // }
 
-socket.on('updatePlayers', (BEplayers) => {
-    // console.log(first)
-    for (const id in BEplayers) {
-        delete players[undefined]
+// socket.on('updatePlayers', (BEplayers) => {
+//     // console.log('====================================')
+//     for (const id in BEplayers) {
+//         delete players[undefined]
 
-        // console.log(BEplayers[id])
-        // console.log(id)
-        if(!players[id]) {
-            // console.log(id)
-            // console.log(players)
-            players[id] = new Player(BEplayers[id].x, BEplayers[id].y, BEplayers[id].color, id)
-        } else {
-            // console.log(socket.id, )
-            if(id !== socket.id) {
-                // console.log(id)
-                players[id].x = BEplayers[id].x
-                players[id].y = BEplayers[id].y
-                console.log('something')
-                // console.log(players[id], BEplayers[id])
-            }
-        }
+//         // console.log(BEplayers[id])
+//         // console.log(id)
+//         if(!players[id]) {
+//             // console.log(id)
+//             // console.log(players)
+//             players[id] = new Player(BEplayers[id].x, BEplayers[id].y, BEplayers[id].color, id)
+//         } else {
+//             // console.log(socket.id, )
+//             if(id !== socket.id) {
+//                 // console.log(id)
+//                 players[id].x = BEplayers[id].x
+//                 players[id].y = BEplayers[id].y
+//                 console.log('something')
+//                 // console.log(players[id], BEplayers[id])
+//             }
+//         }
 
-        for(let id in players) {
-            // console.log(id === undefined)
-            if(!BEplayers[id]) {
-                delete players[id]
-            }
-        }
-    }
-})
-setInterval(() => {
-    // for (const id in players) {
-    //     console.log(id)
-    //     console.log(players[id])
-    // }
-    console.log(socket)
-    if(players[socket.id]) {
-        socket.emit('updatePlayers', {
-            [socket.id]: {
-                x: players[socket.id].x,
-                y: players[socket.id].y,
-                color: players[socket.id].color
-            }
-        })
-    }
-}, 15)
+//         for(let id in players) {
+//             // console.log(id === undefined)
+//             if(!BEplayers[id]) {
+//                 delete players[id]
+//             }
+//         }
+//     }
+// })
+// setInterval(() => {
+//     // for (const id in players) {
+//     //     console.log(id)
+//     //     console.log(players[id])
+//     // }
+//     // console.log(socket.id)
+//     if(players[socket.id]) {
+//         socket.emit('updatePlayers', {
+//             [socket.id]: {
+//                 x: players[socket.id].x,
+//                 y: players[socket.id].y,
+//                 color: players[socket.id].color
+//             }
+//         })
+//     }
+// }, 15)
 
 
 const platforms = [
@@ -94,17 +112,24 @@ const platforms = [
     new Platform(1800, innerHeight - 400, 200, 30),
     new Platform(2000, innerHeight - 400, 200, 30),
     new Platform(2300, innerHeight - 400, 200, 30),
+]
 
+const projectiles = []
+
+const enermies = [
+    // new Enermies(600, innerHeight-50-30)
 ]
 // const platform = new Platform(100, innerHeight - 50, 1000, 50)
 
 
-setTimeout(() => {
-    console.log(socket)
-    movementActive(players[socket.id], socket)
-}, 100)
+// setTimeout(() => {
+    // console.log(socket)
+    // if(players[socket.id]) {
+    //     movementActive(players[socket.id], socket)
+    // }
+// }, 100)
 
-
+movementActive(player)
 
 function handleVerticleCollide(platform, player) {
     if(isCollide.isLanding(player, platform)) {
@@ -136,66 +161,85 @@ function handleHorizontalCollide(platform, player) {
 }
 
 function handleBottomCollide(platform, player) {
-    // console.log('somethiung')
-    // console.log(player, platform)
 
     if(isCollide.isBlocked.isBlockedBottom(player, platform)) {
         player.velocity.y = 4
         return true
     }
 }
-console.dir(socket)
+
+let delay = 0
+
+platforms.forEach((platform) => {
+    const random = Math.round(Math.random() * 3)
+    if(random === 2) {
+        enermies.push(new Enermies(platform.x + platform.w/2, platform.y - 30, platform))
+    }
+    console.log(random)
+})
 
 export function adventure() {
     // platform.update(player)
-    for (const id in players) {
-        for(var i = 0; i < platforms.length; i++) { 
+    // for (const id in players) {
+    //     for(var i = 0; i < platforms.length; i++) { 
 
-            if(handleHorizontalCollide(platforms[i], players[id])) {
-                break
-            }
-        }
-        for(var i = 0; i < platforms.length; i++) { 
-            if(handleVerticleCollide(platforms[i], players[id])) {
-                break
-            }
-        }
-        for(var i = 0; i < platforms.length; i++) { 
-            if(handleBottomCollide(platforms[i], players[id])) {
-                break
-            }
-        }
-        players[id].update(platforms, socket)
-        platforms.forEach(platform => {
-            platform.update(players[id])
-        })
+    //         if(handleHorizontalCollide(platforms[i], players[id])) {
+    //             break
+    //         }
+    //     }
+    //     for(var i = 0; i < platforms.length; i++) { 
+    //         if(handleVerticleCollide(platforms[i], players[id])) {
+    //             break
+    //         }
+    //     }
+    //     for(var i = 0; i < platforms.length; i++) { 
+    //         if(handleBottomCollide(platforms[i], players[id])) {
+    //             break
+    //         }
+    //     }
+    //     players[id].update(platforms, socket)
+    //     platforms.forEach(platform => {
+    //         platform.update(players[id])
+    //     })
     
+    // }
+    delay++
+
+    for(var i = 0; i < platforms.length; i++) { 
+
+        if(handleHorizontalCollide(platforms[i], player)) {
+            break
+        }
     }
+    for(var i = 0; i < platforms.length; i++) { 
+        if(handleVerticleCollide(platforms[i], player)) {
+            break
+        }
+    }
+    for(var i = 0; i < platforms.length; i++) { 
+        if(handleBottomCollide(platforms[i], player)) {
+            break
+        }
+    }
+    player.update(platforms, enermies)
     platforms.forEach(platform => {
-        if (platform.isMoveRight) {
-            platform.x += 4
+        platform.update(player)
+    })
+
+    enermies.forEach((enermie) => {
+        // console.log(enermie)
+        // if(delay % 30 === 0) {
+        //     enermie.isShooting = true
+        // }
+        enermie.update(player, projectiles, platforms)
+        // enermie.shootingZone()
+    })
+
+    projectiles.forEach((projectile, index) => {
+        projectile.update()
+        if(isCollide.isOutOfScreen(projectile)|| projectiles.length >=10) {
+            projectiles.splice(index, 1)
         }
     })
-    // console.log(players)
-
-    // for(var i = 0; i < platforms.length; i++) { 
-
-    //     if(handleHorizontalCollide(platforms[i], player)) {
-    //         break
-    //     }
-    // }
-    // for(var i = 0; i < platforms.length; i++) { 
-    //     if(handleVerticleCollide(platforms[i], player)) {
-    //         break
-    //     }
-    // }
-    // for(var i = 0; i < platforms.length; i++) { 
-    //     if(handleBottomCollide(platforms[i], player)) {
-    //         break
-    //     }
-    // }
-    // player.update(platforms, socket)
-    // platforms.forEach(platform => {
-    //     platform.update(player)
-    // })
+    // console.log(projectiles)
 }

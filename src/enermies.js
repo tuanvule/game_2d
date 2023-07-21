@@ -1,119 +1,104 @@
-import { Particles } from "./particle.js"
+import { isCollide } from "../util/collide.js"
+import { Projectile } from "./projectile.js"
 
 const cv = document.querySelector('#canvas')
 const cvx = cv.getContext('2d')
 
 export class Enermies {
-    constructor() {
-        this.w = innerWidth / 5
-        this.h = innerWidth / 5
-        this.x = cv.width - this.w
-        this.y = cv.height - this.h
-        this.hp_x = 200
-        this.hp_y = 20
-        this.hp_w = innerWidth - this.hp_x*2
-        this.hp_h = 10
-        this.hp = 100
-        this.attack_position = {
-            x: this.x,
-            y: this.y
+    constructor(x, y, type, platform) {
+        this.x = x
+        this.y = y
+        this.h = 30
+        this.w = 30
+        this.type = type
+        this.isShooting = false
+        this.shootingZone = []
+        this.zonePosition = {
+            x: this.x - this.w*5,
+            y: this.y - this.h*5
         }
-        this.attack_velocity = {
-            x: 0,
-            y: 0
-        }
-        this.attack_speed = 10
-        this.attack_r = 10
-        this.isRotate = true
-        this.isLaserAttack = false
-        this.target_position = {
-            x: 0,
-            y: 0
-        }
-        this.laser_speed = 5
-        this.laser_h = 5
-        this.laser_w = -2000
         this.delay = 0
-        this.isFire = false
-        this.red = 60
+        this.isMoveRight = false
+        this.isMoveleft = false
+        this.platform = platform
     }
-    
-    draw(player) {
-        this.attack(player)
 
-        cvx.fillStyle = 'blue'
-        cvx.fillRect(this.x, this.y, this.w, this.h)
-
+    draw() {
         cvx.fillStyle = 'black'
-        cvx.fillRect(this.hp_x, this.hp_y, innerWidth - this.hp_x*2, this.hp_h)
-        cvx.fillStyle = 'red'
-        cvx.fillRect(this.hp_x, this.hp_y, this.hp_w, this.hp_h)
+        cvx.fillRect(this.x, this.y, this.w, this.h)
     }
 
-    update() {
-        
-        if(this.hp_w - 40 <= 0) {
-            this.hp_w = 0
+    update(player, projectiles, platforms) {
+        if(!this.shootingZone.length) {
+            this.shootingZone = this.createShootingZone(platforms)
         } else {
-            console.log('asd')
-            this.hp_w -=40
-        }
-        this.hp = (this.hp_w / (innerWidth - this.hp_x*2)) * 100
-        // this.draw()
-    }
+            // this.drawShootingZone(this.shootingZone)
+            const isShoot = this.shootingZone.some(zone => {
+                if(isCollide.isIn(player, zone)) {
+                    return true
+                }
+            })
 
-    ishited(projectile, type) {
-        if((projectile.x + projectile.r >= this.x &&
-            projectile.x <= this.x+this.w &&
-            projectile.y + projectile.r > this.y
-            ||
-            projectile.y + projectile.r >= this.h &&
-            projectile.y <= this.y> this.h
-            )
-            && !(type === 'explosion')
-        ) 
-        {
-            // console.log('hit')
-            return true
-        }
-    }
-    attack({w,h, x, y}) {
-        this.delay+=1
-
-        if(!this.isLaserAttack) {
-            this.target_position = {
-                x: innerWidth - this.w - x - w/2,
-                y: innerHeight - this.y - (innerHeight - y) + h/2
+            if(isShoot) {
+                this.isShooting = true
+            } else {
+                this.isShooting = false
             }
 
-            this.laser_h = 5
-            // this.isStop = false
-            this.delay = 0
-            this.red = 60
-            // console.log(Math.atan2(this.target_position.y, this.target_position.x) * (180 / Math.PI))
-        }
-        
-        if(this.red > 254) {
-            this.red = 253
-        }
-
-        if (this.laser_h <= 50 && this.delay >= 80 && this.delay <= 120) {
-            this.laser_h += this.laser_speed
-            this.red+=15
-        } else if (this.delay >= 150) {
-            this.laser_h = 0
+            if(this.isMoveLeft) {
+                this.x -= 4
+                this.shootingZone.forEach(zone => {
+                    zone.x -=4
+                })
+            }
+            if (this.isMoveRight) {
+                this.x += 4
+                this.shootingZone.forEach(zone => {
+                    zone.x +=4
+                })
+            }
         }
 
-        var angle = Math.atan2(this.target_position.y, this.target_position.x)
+        if(this.isShooting) {
+            this.delay += 1
+            this.shooting(player, projectiles)
+        }
 
-        cvx.save();
-        cvx.translate(this.x, this.y)
-        cvx.rotate(-angle)
-        cvx.fillStyle = `rgb(${this.red}, 0, 0)`
-        cvx.fillRect(0, -1, this.laser_w, this.laser_h)
-        cvx.fillRect(0, 0, this.laser_w, -this.laser_h)
-        cvx.restore();
-
-        this.isLaserAttack = true
+        this.draw()
     }
+
+    shooting(player, projectiles) {
+        if(this.delay % 40 === 0) {
+            projectiles.push(new Projectile(this.x+this.w/2, this.y+this.h/2, 5, 'red', player.x+player.w/2, player.y+player.h/2, 5))
+        }
+    }
+
+    createShootingZone(platforms) {
+        for (var i = 0; i < 11; i++) {
+            this.shootingZone[i] = [1,1,1,1,1,1,1,1,1,1,1];
+        }
+        let newShootingZone = []
+        for (let i = 0; i < this.shootingZone.length; i++) {
+            for (let j = 0; j < this.shootingZone[i].length; j++) {
+                newShootingZone.push({x: this.zonePosition.x + this.w*j, y: this.zonePosition.y + this.h*i, w: this.w, h: this.h})
+            }
+        }
+
+        for (let i = 0; i < newShootingZone.length; i++) {
+            platforms.forEach((platform) => {
+                if(isCollide.isIn(newShootingZone[i], platform)) {
+                    newShootingZone.splice(i, 1);
+                    i--
+                }
+            })
+        }
+        return newShootingZone
+    }
+
+    // drawShootingZone(shootingZone) {
+    //     shootingZone.forEach(zone => {
+    //         cvx.fillStyle = 'pink'
+    //         cvx.fillRect(zone.x, zone.y, zone.w, zone.h)
+    //     })
+    // }
 }

@@ -1,5 +1,5 @@
 
-import { Enermies } from "../src/enermies.js";
+import { Boss } from "../src/boss.js";
 import { Particles } from "../src/particle.js";
 import { Player } from "../src/player.js";
 import { Projectile } from "../src/projectile.js";
@@ -25,11 +25,11 @@ cv.height = innerHeight
 // console.log(cvx)
 let projectiles = []
 let platforms = []
-let enermiesAttacks = []
+// let BossAttacks = []
 let particles = []
 
 const player = new Player()
-const enermies = new Enermies()
+const boss = new Boss()
 
 let explosionRare = 0
 let laserRare = 0
@@ -40,15 +40,15 @@ setInterval(() => {
     explosionRare++
     laserRare++
     if(explosionRare % 5 ===0) {
-        const projectile = new Projectile(enermies.x, enermies.y, 10, 'red', (player.x+(player.w/2)), (player.y+(player.h/2)), 10)
+        const projectile = new Projectile(boss.x, boss.y, 10, 'red', (player.x+(player.w/2)), (player.y+(player.h/2)), 10)
         projectiles.push({projectile: projectile, type: 'explosion'})
     } else {
-        const projectile = new Projectile(enermies.x, enermies.y, 20, 'red', (player.x+(player.w/2)), (player.y+(player.h/2)), 5)
+        const projectile = new Projectile(boss.x, boss.y, 20, 'red', (player.x+(player.w/2)), (player.y+(player.h/2)), 5)
         projectiles.push({projectile: projectile, type: 'normal'})
     }
     if(laserRare % 6 === 0) {
         // laser attack
-        enermies.isLaserAttack = false
+        boss.isLaserAttack = false
     }
 }, 700);
 
@@ -57,12 +57,12 @@ setInterval(() => {
 
 export function bossFight() {
     player.update()
-    enermies.draw(player)
+    boss.draw(player)
 
     projectiles.forEach(({projectile, type}, index) => {
         projectile.update()
-        if(enermies.ishited(projectile, type)) {
-            enermies.update()
+        if(boss.ishited(projectile, type)) {
+            boss.update()
             projectiles.splice(index, 1)
         }
         if(isCollide.isOutOfScreen(projectile)|| projectiles.length >=10) {

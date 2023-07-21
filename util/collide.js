@@ -68,9 +68,23 @@ function isBlocked() {
     }
 }
 
+function isIn(item1, item2) {
+    // console.log(item1, item2)
+    if (
+        item1.x + item1.w > item2.x &&
+        item1.x < item2.x + item2.w &&
+        item1.y < item2.y + item2.h &&
+        item1.y + item1.h > item2.y
+        ) {
+            // console.log('something')
+        return true
+    }
+}
+
 export const isCollide = {
     isStand,
     isOutOfScreen,
     isLanding,
-    isBlocked: isBlocked()
+    isBlocked: isBlocked(),
+    isIn
 }

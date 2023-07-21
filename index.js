@@ -1,6 +1,6 @@
 import { adventure } from "./arc/adventure.js";
 import { bossFight } from "./arc/boss-fight.js";
-import { Enermies } from "./src/enermies.js";
+import { Boss } from "./src/boss.js";
 import { Particles } from "./src/particle.js";
 import { Player } from "./src/player.js";
 import { Projectile } from "./src/projectile.js";
