@@ -26,12 +26,11 @@ cv.height = innerHeight
 function animation() {
     cvx.clearRect(0, 0, innerWidth, innerHeight)
     // bossFight()
-    adventure()
-
-    requestAnimationFrame(animation)
+    adventure(requestAnimationFrame(animation))
+    
 }
-
 animation()
+
 
 
 

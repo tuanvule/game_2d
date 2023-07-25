@@ -20,6 +20,7 @@ export class Player {
             right: false,
             jump: false
         }
+        this.jumpCount = 0
         this.isLanding = false
         this.isBlocked = {
             left: false,
@@ -31,6 +32,7 @@ export class Player {
         this.sw_x = this.x+this.w*2
         this.sw_y = this.y + this.h/2 - 75
         this.delay = 0
+        this.hearts = document.querySelectorAll('.heart')
     }
     
     draw() {
@@ -41,19 +43,21 @@ export class Player {
         }
     }
 
-    update(platforms, enermies) {
+    update(platforms, enermies, traps, reqID) {
         this.delay++
         if(this.y + this.velocity.y<=innerHeight-this.h && !this.isLanding) {
             this.y += this.velocity.y * devicePixelRatio
             this.velocity.y+=this.gravity
         } else {
+            this.jumpCount = 0
+            console.log('something')
             this.velocity.y = 0
         }
 
-        if(this.actions.right && !this.isBlocked.right && this.x <= innerWidth - 150) {
+        if(this.actions.right && !this.isBlocked.right && this.x <= innerWidth - 250) {
             this.velocity.x = 4
             // socket.emit('keydown', 'd')
-        } else if(this.actions.left && !this.isBlocked.left && this.x >= 150) {
+        } else if(this.actions.left && !this.isBlocked.left && this.x >= 250) {
             this.velocity.x = -4
             // socket.emit('keydown', 'a')
         }
@@ -75,12 +79,15 @@ export class Player {
         this.sw_x = this.x+this.w*2
         this.sw_y = this.y + this.h/2 - 75
 
-        if(this.x >= innerWidth - 150 && this.actions.right) {
+        if(this.x >= innerWidth - 250 && this.actions.right) {
             console.log('asd')
             platforms.forEach(platform => {
                 platform.isMoveLeft = true
             });
             enermies.forEach(enermie => {
+                enermie.isMoveLeft = true
+            });
+            traps.forEach(enermie => {
                 enermie.isMoveLeft = true
             });
         } else {
@@ -90,12 +97,18 @@ export class Player {
             enermies.forEach(enermie => {
                 enermie.isMoveLeft = false
             });
+            traps.forEach(enermie => {
+                enermie.isMoveLeft = false
+            });
         }
-        if(this.x <= 150 && this.actions.left) {
+        if(this.x <= 250 && this.actions.left) {
             platforms.forEach(platform => {
                 platform.isMoveRight = true
             });
             enermies.forEach(enermie => {
+                enermie.isMoveRight = true
+            });
+            traps.forEach(enermie => {
                 enermie.isMoveRight = true
             });
         } else {
@@ -104,6 +117,9 @@ export class Player {
             });
             enermies.forEach(enermie => {
                 enermie.isMoveRight = false
+            });
+            traps.forEach(trap => {
+                trap.isMoveRight = false
             });
         }
         
@@ -118,6 +134,12 @@ export class Player {
 
         //     // console.log(this.id)
         // }
+
+        if(!document.querySelector('.heart')) {
+            // console.log('eeew')
+            cancelAnimationFrame(reqID)
+            document.querySelector('.died_message').style.display = 'block'
+        }
 
 
         this.draw()
@@ -142,9 +164,12 @@ export class Player {
                     this.velocity.y=innerHeight-20 - this.y >= 20 ? 20 : innerHeight-20 - this.y
                     break
                 case 'w':
-                    this.velocity.y=-10
+                    this.jumpCount += 1
+                    if(this.jumpCount <= 2) {
+                        this.velocity.y=-10
+                        this.isLanding = false 
+                    }
                     // socket.emit('keydown', 'w')
-                    this.isLanding = false 
                     // this.actions.jump = true
                     // console.log(this.velocity.y)
                     break
@@ -204,5 +229,13 @@ export class Player {
         img.src = '../texture/soundwave.png'
 
         cvx.drawImage(img, 0, 0, 100, 200, this.sw_x, this.sw_y, this.sw_w, this.sw_h)
+    }
+
+    deviceHeart() {
+        if(document.querySelector('.heart')) {
+            const heartList = document.querySelector('.heart-list')
+            console.log(heartList.children[heartList.children.length - 1])
+            heartList.removeChild(heartList.children[heartList.children.length - 1])
+        }
     }
 }

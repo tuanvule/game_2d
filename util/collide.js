@@ -60,8 +60,6 @@ function isBlocked() {
                 item1.y + item1.velocity.y> item2.y + item2.h - 10 &&
                 item1.y + item1.velocity.y <= item2.y + item2.h
                 ) {
-                console.log('====================')
-                console.log('asd')
                 return true
             }
         }
@@ -69,12 +67,15 @@ function isBlocked() {
 }
 
 function isIn(item1, item2) {
-    // console.log(item1, item2)
     if (
-        item1.x + item1.w > item2.x &&
-        item1.x < item2.x + item2.w &&
-        item1.y < item2.y + item2.h &&
-        item1.y + item1.h > item2.y
+        (item1.x + item1.w > item2.x &&
+            item1.x < item2.x + item2.w &&
+            item1.y < item2.y + item2.h &&
+            item1.y + item1.h > item2.y) ||
+            (item1.x + item1.r > item2.x &&
+                item1.x < item2.x + item2.w &&
+                item1.y < item2.y + item2.h &&
+                item1.y + item1.r > item2.y)
         ) {
             // console.log('something')
         return true

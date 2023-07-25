@@ -2,13 +2,14 @@ const cv = document.querySelector('#canvas')
 const cvx = cv.getContext('2d')
 
 export class Platform {
-    constructor(x, y, w, h) {
+    constructor(x, y, w, h, isSpawn = true) {
         this.w = w
         this.h = h
         this.x = x
         this.y = y
         this.isMoveLeft = false
         this.isMoveRight = false
+        this.isSpawn = isSpawn
     }
     
     draw() {

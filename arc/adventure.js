@@ -7,12 +7,12 @@ import { Projectile } from "../src/projectile.js";
 import { isCollide } from "../util/collide.js";
 import { movementActive } from "../util/movement.js";
 import { Enermies } from "../src/enermies.js";
+import { Trap } from "../src/trap.js";
 
 const $ = document.querySelector.bind(document)
 
 const cv = document.querySelector('#canvas')
 const cvx = cv.getContext('2d')
-
 
 const player = new Player(100, 200, 'red')
 // const players = {}
@@ -103,8 +103,8 @@ const player = new Player(100, 200, 'red')
 
 
 const platforms = [
-    new Platform(200, innerHeight - 50, 10000, 50),
-    new Platform(400, innerHeight - 350, 50, 300),
+    new Platform(200, innerHeight - 50, 800, 50),
+    new Platform(400, innerHeight - 200, 50, 200),
     new Platform(450, innerHeight - 200, 300, 80),
     new Platform(900, innerHeight - 200, 200, 30),
     new Platform(1200, innerHeight - 300, 200, 30),
@@ -112,12 +112,29 @@ const platforms = [
     new Platform(1800, innerHeight - 400, 200, 30),
     new Platform(2000, innerHeight - 400, 200, 30),
     new Platform(2300, innerHeight - 400, 200, 30),
+    new Platform(2800, innerHeight - 50, 1000, 50),
+    new Platform(4800, innerHeight - 50, 500, 50),
+    new Platform(5500, innerHeight - 180, 50, 180, false),
+    new Platform(5800, innerHeight - 300, 50, 300, false),
+    new Platform(6100, innerHeight - 180, 50, 180, false),
+    new Platform(6150, innerHeight - 50, 1000, 50),
+]
+
+const traps = [
+    new Trap(1000, innerHeight - 20, 1800, 20, 'lava'),
+    new Trap(4000, innerHeight - 200, 100, 20, 'drop'),
+    new Trap(4300, innerHeight - 250, 100, 20, 'drop'),
+    new Trap(4600, innerHeight - 200, 100, 20, 'drop'),
+    new Trap(3800, innerHeight - 20, 1000, 20, 'lava'),
+    new Trap(5300, innerHeight - 20, 200, 20, 'lava'),
+    new Trap(5550, innerHeight - 20, 250, 20, 'lava'),
+    new Trap(5850, innerHeight - 20, 250, 20, 'lava'),
 ]
 
 const projectiles = []
 
 const enermies = [
-    // new Enermies(600, innerHeight-50-30)
+    // new Enermies(600, innerHeight-50-30, '', platforms[0])
 ]
 // const platform = new Platform(100, innerHeight - 50, 1000, 50)
 
@@ -135,7 +152,6 @@ function handleVerticleCollide(platform, player) {
     if(isCollide.isLanding(player, platform)) {
         player.isLanding = true
         if (player.y - player.velocity.y >= platform.y + platform.h) {
-            console.log(123)
             player.y += platform.y + platform.h - player.y + 1
         }
         
@@ -172,13 +188,26 @@ let delay = 0
 
 platforms.forEach((platform) => {
     const random = Math.round(Math.random() * 3)
-    if(random === 2) {
-        enermies.push(new Enermies(platform.x + platform.w/2, platform.y - 30, platform))
+    console.log(platform.isSpawn)
+    if(random === 2 && platform.isSpawn) {
+        enermies.push(new Enermies(platform.x + platform.w/2, platform.y - 30, '', platform))
     }
-    console.log(random)
 })
 
-export function adventure() {
+// traps.forEach(trap => {
+//     trap.x -= 3500
+// })
+
+// platforms.forEach(platform => {
+//     platform.x -= 3500
+// })
+
+// enermies.forEach(enermie => {
+//     enermie.x -= 3500
+// })
+
+
+export function adventure(reqID) {
     // platform.update(player)
     // for (const id in players) {
     //     for(var i = 0; i < platforms.length; i++) { 
@@ -203,43 +232,58 @@ export function adventure() {
     //     })
     
     // }
-    delay++
+    // isPlaying=false
 
-    for(var i = 0; i < platforms.length; i++) { 
-
-        if(handleHorizontalCollide(platforms[i], player)) {
-            break
+        delay++
+    
+        for(var i = 0; i < platforms.length; i++) { 
+    
+            if(handleHorizontalCollide(platforms[i], player)) {
+                break
+            }
         }
-    }
-    for(var i = 0; i < platforms.length; i++) { 
-        if(handleVerticleCollide(platforms[i], player)) {
-            break
+        for(var i = 0; i < platforms.length; i++) { 
+            if(handleVerticleCollide(platforms[i], player)) {
+                break
+            }
         }
-    }
-    for(var i = 0; i < platforms.length; i++) { 
-        if(handleBottomCollide(platforms[i], player)) {
-            break
+        for(var i = 0; i < platforms.length; i++) { 
+            if(handleBottomCollide(platforms[i], player)) {
+                break
+            }
         }
-    }
-    player.update(platforms, enermies)
-    platforms.forEach(platform => {
-        platform.update(player)
-    })
-
-    enermies.forEach((enermie) => {
-        // console.log(enermie)
-        // if(delay % 30 === 0) {
-        //     enermie.isShooting = true
-        // }
-        enermie.update(player, projectiles, platforms)
-        // enermie.shootingZone()
-    })
-
-    projectiles.forEach((projectile, index) => {
-        projectile.update()
-        if(isCollide.isOutOfScreen(projectile)|| projectiles.length >=10) {
-            projectiles.splice(index, 1)
-        }
-    })
-    // console.log(projectiles)
+        player.update(platforms, enermies, traps, reqID)
+        platforms.forEach(platform => {
+            platform.update(player)
+        })
+    
+        enermies.forEach((enermie) => {
+            // console.log(enermie)
+            // if(delay % 30 === 0) {
+            //     enermie.isShooting = true
+            // }
+            enermie.update(player, projectiles, platforms)
+            // enermie.shootingZone()
+        })
+    
+        projectiles.forEach((projectile, index) => {
+            projectile.update(player)
+            if(isCollide.isOutOfScreen(projectile)|| projectiles.length >=10) {
+                projectiles.splice(index, 1)
+            } 
+            platforms.forEach(platform => {
+                if(isCollide.isIn(projectile, platform)) {
+                    projectiles.splice(index, 1)
+                }
+            })
+            if(isCollide.isIn(projectile, player)) {
+                player.deviceHeart()
+                projectiles.splice(index, 1)
+            }
+        })
+    
+        traps.forEach(trap => {
+            trap.update(player, reqID)
+        })
+    
 }

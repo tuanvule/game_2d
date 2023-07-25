@@ -150,3 +150,30 @@ canvas {
 .play-btn:hover {
     background-color: #eeeeee;
 }
+
+.heart-list {
+    display: flex;
+    width: 200px;
+    /* justify-content: space-around; */
+    align-items: left;
+}
+
+.heart {
+    width: 50px;
+    margin: 0 5px;
+}
+
+.died_message h1 {
+    font-size: 100px;
+}
+
+.died_message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0,0,0,.4);
+    width: max-content;
+    padding: 100px 200px;
+    display: none;
+}
