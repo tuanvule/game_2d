@@ -168,6 +168,7 @@ export class Player {
                     this.jumpCount += 1
                     if(this.jumpCount <= 2) {
                         this.velocity.y=this.device === 'mobile' ? -7 : -10
+                        this.y -= 2
                         this.isLanding = false 
                     }
                     // socket.emit('keydown', 'w')
