@@ -24,9 +24,12 @@ cv.width = innerWidth
 cv.height = innerHeight
 
 function animation() {
-    cvx.clearRect(0, 0, innerWidth, innerHeight)
-    // bossFight()
-    adventure(requestAnimationFrame(animation))
+    console.log('somethoing')
+    if(setting.device) {
+        cvx.clearRect(0, 0, innerWidth, innerHeight)
+        // bossFight()
+        adventure(requestAnimationFrame(animation))
+    }
     
 }
 animation()
@@ -68,6 +71,7 @@ mobileBtn.onclick = () => {
     pcBtn.style.color = 'black'
 
     setting.device = 'mobile'
+    screen.name = 'mobile'
 }
 
 pcBtn.onclick = () => {
@@ -78,6 +82,7 @@ pcBtn.onclick = () => {
     mobileBtn.style.color = 'black'
 
     setting.device = 'pc'
+    screen.name = 'pc'
 }
 
 playBtn.onclick = () => {
@@ -88,4 +93,5 @@ playBtn.onclick = () => {
         build(saveSetting)
         screen.style.display = 'none'
     }
+    animation()
 }

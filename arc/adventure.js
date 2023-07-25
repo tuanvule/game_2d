@@ -14,7 +14,7 @@ const $ = document.querySelector.bind(document)
 const cv = document.querySelector('#canvas')
 const cvx = cv.getContext('2d')
 
-const player = new Player(100, 200, 'red')
+const player = new Player(100, 200, 'red', '')
 // const players = {}
 
 // const socket = io('https://multiplayergame-server.vercel.app/', {
@@ -233,7 +233,39 @@ export function adventure(reqID) {
     
     // }
     // isPlaying=false
+    cvx.save()
+    cvx.scale(.5,.5)
+    cvx.translate(200, 410)
+    if(!player.device) {
+            const device = document.querySelector('.screen').name
+            player.device = device
+            // platforms.forEach(platform => {
+            //     if(device === 'mobile') {
+            //         platform.x *= 0.5
+            //         // platform.y *= 0.5
+            //         platform.w *= 0.5
+            //         platform.h *= 0.5
+            //     }
+            // })
 
+            // traps.forEach(trap => {
+            //     if(device === 'mobile') {
+            //         trap.x *= 0.5
+            //         // trap.y *= 0.5
+            //         trap.w *= 0.5
+            //         trap.h *= 0.5
+            //     }
+            // })
+
+            // enermies.forEach(enermie => {
+            //     if(device === 'mobile') {
+            //         enermie.x *= 0.5
+            //         enermie.y *= 0.5
+            //         enermie.w *= 0.5
+            //         enermie.h *= 0.5
+            //     }
+            // })
+        }
         delay++
     
         for(var i = 0; i < platforms.length; i++) { 
@@ -285,5 +317,6 @@ export function adventure(reqID) {
         traps.forEach(trap => {
             trap.update(player, reqID)
         })
+        cvx.restore()
     
 }

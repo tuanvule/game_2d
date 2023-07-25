@@ -3,7 +3,7 @@ const cv = document.querySelector('#canvas')
 const cvx = cv.getContext('2d')
 
 export class Player {
-    constructor(x = 300, y = (innerHeight - this.h - 100), color = 'blue', id) {
+    constructor(x = 300, y = (innerHeight - this.h - 100), color = 'blue', id, device) {
         this.h = 20
         this.w = 20
         this.x = x
@@ -33,6 +33,7 @@ export class Player {
         this.sw_y = this.y + this.h/2 - 75
         this.delay = 0
         this.hearts = document.querySelectorAll('.heart')
+        this.device = device
     }
     
     draw() {
@@ -55,10 +56,10 @@ export class Player {
         }
 
         if(this.actions.right && !this.isBlocked.right && this.x <= innerWidth - 250) {
-            this.velocity.x = 4
+            this.velocity.x = this.device === 'mobile' ? 2 : 4
             // socket.emit('keydown', 'd')
         } else if(this.actions.left && !this.isBlocked.left && this.x >= 250) {
-            this.velocity.x = -4
+            this.velocity.x = this.device === 'mobile' ? -2 : -4
             // socket.emit('keydown', 'a')
         }
          else {
@@ -166,7 +167,7 @@ export class Player {
                 case 'w':
                     this.jumpCount += 1
                     if(this.jumpCount <= 2) {
-                        this.velocity.y=-10
+                        this.velocity.y=this.device === 'mobile' ? -7 : -10
                         this.isLanding = false 
                     }
                     // socket.emit('keydown', 'w')
