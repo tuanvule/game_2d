@@ -6,6 +6,7 @@ function isStand(item1, item2) {
         item1.x <= item2.x + item2.w
     ) 
     {
+        console.log(isStand)
         return true
     }
 }
@@ -17,15 +18,17 @@ function isOutOfScreen(item1) {
         item1.y - item1.r <= 0
     )
     {
+        console.log('isOutOfScreen')
         return true;
     }
 }
 
 function isLanding(item1, item2) {
-    if(item1.x + item1.w > item2.x &&
-        item1.x < item2.x + item2.w - 2 &&
-        item1.y + item1.h + item1.velocity.y >= item2.y &&
-        item1.y <= item2.y + 0.01) {
+    if(item1.x + item1.w > item2.x + 4 &&
+        item1.x < item2.x + item2.w -4 &&
+        item1.y + item1.h + item1.velocity.y + 1 >= item2.y &&
+        item1.y <= item2.y) {
+            console.log('landing')
             return true;
         }
 }
@@ -35,21 +38,22 @@ function isBlocked() {
         isBlockedRight(item1, item2) {
             if (
                 item1.x+item1.w >= item2.x &&
-                item1.x + item1.w <= item2.x+1 &&
+                item1.x + item1.w <= item2.x+4 &&
                 item1.y + item1.h >= item2.y &&
                 item1.y <= item2.y + item2.h
             ) {
+                console.log('isBlockedRight')
                 return true
             }
         },
         isBlockedLeft(item1, item2) {
             if (
                 item1.x <= item2.x + item2.w &&
-                item1.x >= item2.x + item2.w -2 &&
+                item1.x >= item2.x + item2.w -4 &&
                 item1.y + item1.h >= item2.y &&
                 item1.y <= item2.y + item2.h
             ) {
-                // console.log('asd')
+                console.log('isBlockedLeft')
                 return true
             }
         },
@@ -60,6 +64,7 @@ function isBlocked() {
                 item1.y + item1.velocity.y> item2.y + item2.h - 10 &&
                 item1.y + item1.velocity.y <= item2.y + item2.h
                 ) {
+                    console.log('isBlockedBottom')
                 return true
             }
         }

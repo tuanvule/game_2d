@@ -104,7 +104,7 @@ const player = new Player(100, 200, 'red', '')
 
 const platforms = [
     new Platform(200, innerHeight - 50, 800, 50),
-    new Platform(400, innerHeight - 200, 50, 200),
+    new Platform(400, innerHeight - 250, 50, 200),
     new Platform(450, innerHeight - 200, 300, 80),
     new Platform(900, innerHeight - 200, 200, 30),
     new Platform(1200, innerHeight - 300, 200, 30),

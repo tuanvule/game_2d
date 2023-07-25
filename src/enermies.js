@@ -142,6 +142,8 @@ export class Enermies {
                 this.velocity.x = 1
             }
         } else {
+            this.isMoveRight = false
+            this.isMoveLeft = false
             this.velocity.x = 0
         }
 
