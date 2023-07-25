@@ -171,7 +171,7 @@ export class Player {
                 case 'w':
                     this.jumpCount += 1
                     if(this.jumpCount <= 2) {
-                        this.velocity.y=this.device === 'mobile' ? -7 : -10
+                        this.velocity.y=this.device === 'mobile' ? -4 : -10
                         this.y -= 2
                         this.isLanding = false 
                     }
