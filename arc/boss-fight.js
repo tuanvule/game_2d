@@ -11,12 +11,6 @@ const $ = document.querySelector.bind(document)
 const cv = $('#canvas')
 const cvx = cv.getContext('2d')
 
-let setting = {
-    device: '',
-}
-
-let saveSetting
-
 const movementBody = $('.movement-body')
 
 cv.width = innerWidth

@@ -1,9 +1,9 @@
 const $ = document.querySelector.bind(document)
-// const moveLeft = $('.move_left')
-// const moveRight = $('.move_right')
-// const jump = $('.jump')
-// const shield = $('.shield')
-// const spawnPlatfom = $('.spawnPlatfom')
+const moveLeft = $('.move_left')
+const moveRight = $('.move_right')
+const jump = $('.jump')
+const shield = $('.shield')
+const spawnPlatfom = $('.spawnPlatfom')
 
 
 export function movementActive(player, socket) {
@@ -42,31 +42,31 @@ export function movementActive(player, socket) {
     //     }, 1)
     // }
 
-    // moveLeft.ontouchstart = () => {
-    //     player.action('a', 'keydown')
-    // }
-    // moveRight.ontouchstart = () => {
-    //     player.action('d', 'keydown')
-    // }
-    // jump.ontouchstart = () => {
-    //     player.action('w', 'keydown')
-    // }
-    // shield.ontouchstart = () => {
-    //     player.action('q', 'keydown')
-    // }
+    moveLeft.ontouchstart = () => {
+        player.action('a', 'keydown')
+    }
+    moveRight.ontouchstart = () => {
+        player.action('d', 'keydown')
+    }
+    jump.ontouchstart = () => {
+        player.action('w', 'keydown')
+    }
+    shield.ontouchstart = () => {
+        player.action('q', 'keydown')
+    }
     
-    // moveLeft.ontouchend = () => {
-    //     player.action('a', 'keyup')
-    // }
-    // moveRight.ontouchend = () => {
-    //     player.action('d', 'keyup')
-    // }
-    // jump.ontouchend = () => {
-    //     player.action('w', 'keyup')
-    // }
-    // shield.ontouchend = () => {
-    //     player.action('q', 'keyup')
-    // }
+    moveLeft.ontouchend = () => {
+        player.action('a', 'keyup')
+    }
+    moveRight.ontouchend = () => {
+        player.action('d', 'keyup')
+    }
+    jump.ontouchend = () => {
+        player.action('w', 'keyup')
+    }
+    shield.ontouchend = () => {
+        player.action('q', 'keyup')
+    }
 
 
     window.onkeydown = ({key}) => {

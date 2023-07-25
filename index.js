@@ -7,11 +7,11 @@ import { Projectile } from "./src/projectile.js";
 
 // ----setting----
 
-// let setting = {
-//     device: '',
-// }
+let setting = {
+    device: '',
+}
 
-// let saveSetting
+let saveSetting
 
 const $ = document.querySelector.bind(document)
 
@@ -55,37 +55,37 @@ function build(saveSetting) {
 }
 
 // menu setting
-// const mobileBtn = $('.menu_choose-device--mobile')
-// const pcBtn = $('.menu_choose-device--pc')
-// const playBtn = $('.play-btn')
-// const screen = $('.screen')
+const mobileBtn = $('.menu_choose-device--mobile')
+const pcBtn = $('.menu_choose-device--pc')
+const playBtn = $('.play-btn')
+const screen = $('.screen')
 
-// mobileBtn.onclick = () => {
-//     mobileBtn.style.backgroundColor = 'blue'
-//     mobileBtn.style.color = 'white'
+mobileBtn.onclick = () => {
+    mobileBtn.style.backgroundColor = 'blue'
+    mobileBtn.style.color = 'white'
 
-//     pcBtn.style.backgroundColor = 'white'
-//     pcBtn.style.color = 'black'
+    pcBtn.style.backgroundColor = 'white'
+    pcBtn.style.color = 'black'
 
-//     setting.device = 'mobile'
-// }
+    setting.device = 'mobile'
+}
 
-// pcBtn.onclick = () => {
-//     pcBtn.style.backgroundColor = 'blue'
-//     pcBtn.style.color = 'white'
+pcBtn.onclick = () => {
+    pcBtn.style.backgroundColor = 'blue'
+    pcBtn.style.color = 'white'
 
-//     mobileBtn.style.backgroundColor = 'white'
-//     mobileBtn.style.color = 'black'
+    mobileBtn.style.backgroundColor = 'white'
+    mobileBtn.style.color = 'black'
 
-//     setting.device = 'pc'
-// }
+    setting.device = 'pc'
+}
 
-// playBtn.onclick = () => {
-//     saveSetting = setting
-//     console.log(saveSetting)
-//     console.log(Boolean(saveSetting.device))
-//     if(saveSetting.device) {
-//         build(saveSetting)
-//         screen.style.display = 'none'
-//     }
-// }
+playBtn.onclick = () => {
+    saveSetting = setting
+    console.log(saveSetting)
+    console.log(Boolean(saveSetting.device))
+    if(saveSetting.device) {
+        build(saveSetting)
+        screen.style.display = 'none'
+    }
+}
