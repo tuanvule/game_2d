@@ -142,6 +142,10 @@ export class Player {
             document.querySelector('.died_message').style.display = 'block'
         }
 
+        if(this.device === 'mobile') {
+            this.gravity = .2
+        }
+
 
         this.draw()
     }
