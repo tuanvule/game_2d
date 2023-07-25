@@ -80,7 +80,7 @@ export class Player {
         this.sw_x = this.x+this.w*2
         this.sw_y = this.y + this.h/2 - 75
 
-        if(this.x >= innerWidth - 250 && this.actions.right) {
+        if(this.x >= innerWidth - 250 && this.actions.right && !this.isBlocked.right) {
             console.log('asd')
             platforms.forEach(platform => {
                 platform.isMoveLeft = true
@@ -102,7 +102,7 @@ export class Player {
                 enermie.isMoveLeft = false
             });
         }
-        if(this.x <= 250 && this.actions.left) {
+        if(this.x <= 250 && this.actions.left && !this.isBlocked.left) {
             platforms.forEach(platform => {
                 platform.isMoveRight = true
             });
