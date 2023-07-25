@@ -234,11 +234,14 @@ export function adventure(reqID) {
     // }
     // isPlaying=false
     cvx.save()
-    cvx.scale(.5,.5)
-    cvx.translate(200, 410)
-    if(!player.device) {
-            const device = document.querySelector('.screen').name
-            player.device = device
+    let device = document.querySelector('.screen').name
+    player.device = device
+    if(device === 'mobile') {
+        cvx.scale(.5,.5)
+        cvx.translate(0, canvas.height)
+        console.log([3213123])
+    }
+        if(!player.device) {
             // platforms.forEach(platform => {
             //     if(device === 'mobile') {
             //         platform.x *= 0.5
