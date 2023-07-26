@@ -53,15 +53,15 @@ export class Enermies {
             }
 
             if(this.isMoveLeft) {
-                this.x -= 4
+                this.x -= 4 * (1 / devicePixelRatio)
                 this.shootingZone.forEach(zone => {
-                    zone.x -=4
+                    zone.x -=4 * (1 / devicePixelRatio)
                 })
             }
             if (this.isMoveRight) {
-                this.x += 4
+                this.x += 4 * (1 / devicePixelRatio)
                 this.shootingZone.forEach(zone => {
-                    zone.x +=4
+                    zone.x +=4 * (1 / devicePixelRatio)
                 })
             }
             
@@ -70,13 +70,14 @@ export class Enermies {
             this.delay += 1
             this.shooting(player, projectiles)
         }
-        this.x+=this.velocity.x
+        this.x+=this.velocity.x * (1 / devicePixelRatio)
         this.movement(platforms)
         this.draw()
     }
 
     shooting(player, projectiles) {
         if(this.delay % 40 === 0) {
+            console.log(player)
             projectiles.push(new Projectile(this.x+this.w/2, this.y+this.h/2, 10, 'red', player.x+player.w/2, player.y+player.h/2, 5))
         }
     }

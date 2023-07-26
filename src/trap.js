@@ -33,14 +33,14 @@ export class Trap{
             }
             if(this.isDrop) {
                 cvx.fillStyle = 'green'
-                cvx.fillRect(this.x, this.y + 100, this.w, this.h)
+                cvx.fillRect(this.x, this.y + (100 * (1 / devicePixelRatio)), this.w, this.h)
             }
-            if(isCollide.isLanding(player, {x: this.x, y: this.y + 100, w: this.w, h: this.h}) && this.dropDelay <= 100) {
+            if(isCollide.isLanding(player, {x: this.x, y: this.y + (100 * (1 / devicePixelRatio)), w: this.w, h: this.h}) && this.dropDelay <= 50) {
                 player.jumpCount = 0
                 player.velocity.y = 0
                 this.dropDelay++
             }
-            if(this.dropDelay > 100) {
+            if(this.dropDelay > 50) {
                 this.isDrop = false
                 // this.dropDelay = 0
             }
@@ -57,10 +57,10 @@ export class Trap{
         }
 
         if(this.isMoveLeft) {
-            this.x -= 4
+            this.x -= 4* (1 / devicePixelRatio)
         }
         if (this.isMoveRight) {
-            this.x += 4
+            this.x += 4* (1 / devicePixelRatio)
         }
 
         this.draw(player)

@@ -4,8 +4,8 @@ const cvx = cv.getContext('2d')
 
 export class Player {
     constructor(x = 300, y = (innerHeight - this.h - 100), color = 'blue', id, device) {
-        this.h = 20
-        this.w = 20
+        this.h = 20 * (1 / devicePixelRatio)
+        this.w = 20 * (1 / devicePixelRatio)
         this.x = x
         this.y = y 
         this.color = color
@@ -47,26 +47,25 @@ export class Player {
     update(platforms, enermies, traps, reqID) {
         this.delay++
         if(this.y + this.velocity.y<=innerHeight-this.h && !this.isLanding) {
-            this.y += this.velocity.y * devicePixelRatio
             this.velocity.y+=this.gravity
+            this.y += this.velocity.y
         } else {
             this.jumpCount = 0
-            console.log('something')
             this.velocity.y = 0
         }
 
         if(this.actions.right && !this.isBlocked.right && this.x <= innerWidth - 250) {
-            this.velocity.x = this.device === 'mobile' ? 2 : 4
+            this.velocity.x = 4
             // socket.emit('keydown', 'd')
         } else if(this.actions.left && !this.isBlocked.left && this.x >= 250) {
-            this.velocity.x = this.device === 'mobile' ? -2 : -4
+            this.velocity.x = -4
             // socket.emit('keydown', 'a')
         }
          else {
             this.velocity.x=0
         }
 
-        this.x += this.velocity.x * devicePixelRatio
+        this.x += this.velocity.x * (1 / devicePixelRatio)
 
         if(this.isSpawnSoundWave && this.sw_w <= 20) {
             this.sw_w+=10
@@ -81,7 +80,6 @@ export class Player {
         this.sw_y = this.y + this.h/2 - 75
 
         if(this.x >= innerWidth - 250 && this.actions.right && !this.isBlocked.right) {
-            console.log('asd')
             platforms.forEach(platform => {
                 platform.isMoveLeft = true
             });
@@ -171,7 +169,7 @@ export class Player {
                 case 'w':
                     this.jumpCount += 1
                     if(this.jumpCount <= 2) {
-                        this.velocity.y=this.device === 'mobile' ? -4 : -10
+                        this.velocity.y= -11 * (1 / devicePixelRatio)
                         this.y -= 2
                         this.isLanding = false 
                     }

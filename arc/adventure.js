@@ -14,7 +14,9 @@ const $ = document.querySelector.bind(document)
 const cv = document.querySelector('#canvas')
 const cvx = cv.getContext('2d')
 
-const player = new Player(100, 200, 'red', '')
+const deviceRatio = 1 / devicePixelRatio
+
+const player = new Player(100 , 200 , 'red', '')
 // const players = {}
 
 // const socket = io('https://multiplayergame-server.vercel.app/', {
@@ -101,34 +103,33 @@ const player = new Player(100, 200, 'red', '')
 //     }
 // }, 15)
 
-
 const platforms = [
-    new Platform(200, innerHeight - 50, 800, 50),
-    new Platform(400, innerHeight - 250, 50, 200),
-    new Platform(450, innerHeight - 200, 300, 80),
-    new Platform(900, innerHeight - 200, 200, 30),
-    new Platform(1200, innerHeight - 300, 200, 30),
-    new Platform(1500, innerHeight - 400, 200, 30),
-    new Platform(1800, innerHeight - 400, 200, 30),
-    new Platform(2000, innerHeight - 400, 200, 30),
-    new Platform(2300, innerHeight - 400, 200, 30),
-    new Platform(2800, innerHeight - 50, 1000, 50),
-    new Platform(4800, innerHeight - 50, 500, 50),
-    new Platform(5500, innerHeight - 180, 50, 180, false),
-    new Platform(5800, innerHeight - 300, 50, 300, false),
-    new Platform(6100, innerHeight - 180, 50, 180, false),
-    new Platform(6150, innerHeight - 50, 1000, 50),
+    new Platform(200, innerHeight - (50 * deviceRatio), 800, 50),
+    new Platform(400, innerHeight - (250 * deviceRatio), 50, 200),
+    new Platform(450, innerHeight - (200 * deviceRatio), 300, 80),
+    new Platform(900, innerHeight - (200 * deviceRatio), 200, 30),
+    new Platform(1200, innerHeight - (300 * deviceRatio), 200, 30),
+    new Platform(1500, innerHeight - (400 * deviceRatio), 200, 30),
+    new Platform(1800, innerHeight - (400 * deviceRatio), 200, 30),
+    new Platform(2000, innerHeight - (400 * deviceRatio), 200, 30),
+    new Platform(2300, innerHeight - (400 * deviceRatio), 200, 30),
+    new Platform(2800, innerHeight - (50 * deviceRatio), 1000, 50),
+    new Platform(4800, innerHeight - (50 * deviceRatio), 500, 50),
+    new Platform(5500, innerHeight - (180 * deviceRatio), 50, 180, false),
+    new Platform(5800, innerHeight - (300 * deviceRatio), 50, 300, false),
+    new Platform(6100, innerHeight - (180 * deviceRatio), 50, 180, false),
+    new Platform(6150, innerHeight - (50 * deviceRatio), 1000, 50),
 ]
 
 const traps = [
-    new Trap(1000, innerHeight - 20, 1800, 20, 'lava'),
-    new Trap(4000, innerHeight - 200, 100, 20, 'drop'),
-    new Trap(4300, innerHeight - 250, 100, 20, 'drop'),
-    new Trap(4600, innerHeight - 200, 100, 20, 'drop'),
-    new Trap(3800, innerHeight - 20, 1000, 20, 'lava'),
-    new Trap(5300, innerHeight - 20, 200, 20, 'lava'),
-    new Trap(5550, innerHeight - 20, 250, 20, 'lava'),
-    new Trap(5850, innerHeight - 20, 250, 20, 'lava'),
+    new Trap(1000, innerHeight - (20 * deviceRatio), 1800, 20, 'lava'),
+    new Trap(4000, innerHeight - (200 * deviceRatio), 100, 20, 'drop'),
+    new Trap(4300, innerHeight - (250 * deviceRatio), 100, 20, 'drop'),
+    new Trap(4600, innerHeight - (200 * deviceRatio), 100, 20, 'drop'),
+    new Trap(3800, innerHeight - (20 * deviceRatio), 1000, 20, 'lava'),
+    new Trap(5300, innerHeight - (20 * deviceRatio), 200, 20, 'lava'),
+    new Trap(5550, innerHeight - (20 * deviceRatio), 250, 20, 'lava'),
+    new Trap(5850, innerHeight - (20 * deviceRatio), 250, 20, 'lava'),
 ]
 
 const projectiles = []
@@ -190,7 +191,7 @@ platforms.forEach((platform) => {
     const random = Math.round(Math.random() * 3)
     console.log(platform.isSpawn)
     if(random === 2 && platform.isSpawn) {
-        enermies.push(new Enermies(platform.x + platform.w/2, platform.y - 30, '', platform))
+        enermies.push(new Enermies(platform.x + platform.w/2, platform.y - (30 * deviceRatio), '', platform))
     }
 })
 
@@ -236,39 +237,39 @@ export function adventure(reqID) {
     cvx.save()
     let device = document.querySelector('.screen').name
     player.device = device
-    if(device === 'mobile') {
-        cvx.scale(.5,.5)
-        cvx.translate(0, canvas.height)
-        console.log([3213123])
+    // if(device === 'mobile') {
+        // cvx.scale(.5,.5)
+        // cvx.translate(0, innerHeight)
+    // }
+    if(device === 'mobile' && delay === 0) {
+        // console.log([asd])
+        platforms.forEach(platform => {
+            if(device === 'mobile') {
+                platform.w *= 1 / devicePixelRatio
+                platform.h *= 1 / devicePixelRatio
+                platform.x *= 1 / devicePixelRatio
+                // platform.y *= 1 / devicePixelRatio
+            }
+        })
+
+        traps.forEach(trap => {
+            if(device === 'mobile') {
+                trap.w *= 1 / devicePixelRatio
+                trap.h *= 1 / devicePixelRatio
+                trap.x *= 1 / devicePixelRatio
+                // trap.y *= 1 / devicePixelRatio
+            }
+        })
+
+        enermies.forEach(enermie => {
+            if(device === 'mobile') {
+                enermie.w *= 1 / devicePixelRatio
+                enermie.h *= 1 / devicePixelRatio
+                enermie.x *= 1 / devicePixelRatio
+                // enermie.y *= 1 / devicePixelRatio
+            }
+        })
     }
-        if(!player.device) {
-            // platforms.forEach(platform => {
-            //     if(device === 'mobile') {
-            //         platform.x *= 0.5
-            //         // platform.y *= 0.5
-            //         platform.w *= 0.5
-            //         platform.h *= 0.5
-            //     }
-            // })
-
-            // traps.forEach(trap => {
-            //     if(device === 'mobile') {
-            //         trap.x *= 0.5
-            //         // trap.y *= 0.5
-            //         trap.w *= 0.5
-            //         trap.h *= 0.5
-            //     }
-            // })
-
-            // enermies.forEach(enermie => {
-            //     if(device === 'mobile') {
-            //         enermie.x *= 0.5
-            //         enermie.y *= 0.5
-            //         enermie.w *= 0.5
-            //         enermie.h *= 0.5
-            //     }
-            // })
-        }
         delay++
     
         for(var i = 0; i < platforms.length; i++) { 
@@ -300,6 +301,8 @@ export function adventure(reqID) {
             enermie.update(player, projectiles, platforms)
             // enermie.shootingZone()
         })
+
+        console.log(player)
     
         projectiles.forEach((projectile, index) => {
             projectile.update(player)

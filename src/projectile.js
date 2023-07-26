@@ -26,9 +26,9 @@ export class Projectile {
     draw() {
         cvx.beginPath()
         cvx.fillStyle = this.color
-        cvx.arc(this.x, this.y, this.r, 0, 2*Math.PI)
-        this.x+=this.velocity.x * this.speed * this.direction
-        this.y+=this.velocity.y * this.speed
+        cvx.arc(this.x, this.y, this.r * (1 / devicePixelRatio), 0, 2*Math.PI)
+        this.x+=this.velocity.x * this.speed * this.direction * (1 / devicePixelRatio)
+        this.y+=this.velocity.y * this.speed * (1 / devicePixelRatio)
         cvx.fill()
     }
 

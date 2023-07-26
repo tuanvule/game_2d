@@ -24,7 +24,6 @@ cv.width = innerWidth
 cv.height = innerHeight
 
 function animation() {
-    console.log('somethoing')
     if(setting.device) {
         cvx.clearRect(0, 0, innerWidth, innerHeight)
         // bossFight()
