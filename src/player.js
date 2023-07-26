@@ -169,7 +169,7 @@ export class Player {
                 case 'w':
                     this.jumpCount += 1
                     if(this.jumpCount <= 2) {
-                        this.velocity.y= -11 * (1 / devicePixelRatio)
+                        this.velocity.y= -12 * (1 / devicePixelRatio)
                         this.y -= 2
                         this.isLanding = false 
                     }
