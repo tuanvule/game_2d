@@ -77,7 +77,6 @@ export class Enermies {
 
     shooting(player, projectiles) {
         if(this.delay % 40 === 0) {
-            console.log(player)
             projectiles.push(new Projectile(this.x+this.w/2, this.y+this.h/2, 10, 'red', player.x+player.w/2, player.y+player.h/2, 5))
         }
     }

@@ -32,9 +32,11 @@ export class Platform {
         // }
         if(this.isMoveLeft) {
             this.x -= 4* (1 / devicePixelRatio)
+            console.log(4* (1 / devicePixelRatio))
         }
         if (this.isMoveRight) {
             this.x += 4* (1 / devicePixelRatio)
+            console.log(4* (1 / devicePixelRatio))
         }
         this.hp = (this.hp_w / (innerWidth - this.hp_x*2)) * 100
         this.draw()

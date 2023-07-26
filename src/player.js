@@ -54,10 +54,10 @@ export class Player {
             this.velocity.y = 0
         }
 
-        if(this.actions.right && !this.isBlocked.right && this.x <= innerWidth - 250) {
+        if(this.actions.right && !this.isBlocked.right && this.x <= innerWidth - 350) {
             this.velocity.x = 4
             // socket.emit('keydown', 'd')
-        } else if(this.actions.left && !this.isBlocked.left && this.x >= 250) {
+        } else if(this.actions.left && !this.isBlocked.left && this.x >= 350) {
             this.velocity.x = -4
             // socket.emit('keydown', 'a')
         }
@@ -79,7 +79,8 @@ export class Player {
         this.sw_x = this.x+this.w*2
         this.sw_y = this.y + this.h/2 - 75
 
-        if(this.x >= innerWidth - 250 && this.actions.right && !this.isBlocked.right) {
+        if(this.x >= innerWidth - 350 && this.actions.right && !this.isBlocked.right) {
+            console.log('a')
             platforms.forEach(platform => {
                 platform.isMoveLeft = true
             });
@@ -100,7 +101,8 @@ export class Player {
                 enermie.isMoveLeft = false
             });
         }
-        if(this.x <= 250 && this.actions.left && !this.isBlocked.left) {
+        if(this.x <= 350 && this.actions.left && !this.isBlocked.left) {
+            console.log(this.velocity.x)
             platforms.forEach(platform => {
                 platform.isMoveRight = true
             });
@@ -169,7 +171,7 @@ export class Player {
                 case 'w':
                     this.jumpCount += 1
                     if(this.jumpCount <= 2) {
-                        this.velocity.y= -12 * (1 / devicePixelRatio)
+                        this.velocity.y= this.device === 'mobile' ? -12 * (1 / devicePixelRatio) : -12
                         this.y -= 2
                         this.isLanding = false 
                     }

@@ -207,7 +207,6 @@ platforms.forEach((platform) => {
 //     enermie.x -= 3500
 // })
 
-
 export function adventure(reqID) {
     // platform.update(player)
     // for (const id in players) {
@@ -301,8 +300,6 @@ export function adventure(reqID) {
             enermie.update(player, projectiles, platforms)
             // enermie.shootingZone()
         })
-
-        console.log(player)
     
         projectiles.forEach((projectile, index) => {
             projectile.update(player)
