@@ -253,7 +253,7 @@ export function adventure(reqID) {
                 // platform.y *= 1 / devicePixelRatio
             }
         })
-
+        
         traps.forEach(trap => {
             if(device === 'mobile') {
                 trap.w *= 1 / devicePixelRatio
