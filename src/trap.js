@@ -47,10 +47,15 @@ export class Trap{
         }
     }
 
-    update(player, isPlaying) {
+    update(player, isPlaying, checkPoint) {
         if (this.type === 'lava') {
             if(isCollide.isStand(player, {x: this.x, y: this.y, w: this.w, h: this.h})) {
                 player.deviceHeart()
+                if(checkPoint) {
+                    player.x = checkPoint.x
+                    player.y = checkPoint.y
+                    player.velocity.y = 0
+                }
             } 
         } else if(this.type === 'drop') {
             

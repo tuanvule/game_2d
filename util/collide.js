@@ -71,7 +71,10 @@ function isBlocked() {
     }
 }
 
-function isIn(item1, item2) {
+function isIn(item1, item2, isDebug) {
+    if(isDebug) {
+            console.log(item1, item2)
+        }
     if (
         (item1.x + item1.w > item2.x &&
             item1.x < item2.x + item2.w &&
@@ -82,7 +85,7 @@ function isIn(item1, item2) {
                 item1.y < item2.y + item2.h &&
                 item1.y + item1.r > item2.y)
         ) {
-            // console.log('something')
+        
         return true
     }
 }

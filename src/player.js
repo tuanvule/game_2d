@@ -80,7 +80,6 @@ export class Player {
         this.sw_y = this.y + this.h/2 - 75
 
         if(this.x >= innerWidth - 350 && this.actions.right && !this.isBlocked.right) {
-            console.log('a')
             platforms.forEach(platform => {
                 platform.isMoveLeft = true
             });
@@ -102,7 +101,6 @@ export class Player {
             });
         }
         if(this.x <= 350 && this.actions.left && !this.isBlocked.left) {
-            console.log(this.velocity.x)
             platforms.forEach(platform => {
                 platform.isMoveRight = true
             });

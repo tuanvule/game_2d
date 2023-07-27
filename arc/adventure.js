@@ -17,6 +17,9 @@ const cvx = cv.getContext('2d')
 const deviceRatio = 1 / devicePixelRatio
 
 const player = new Player(100 , 200 , 'red', '')
+
+let checkPoint
+
 // const players = {}
 
 // const socket = io('https://multiplayergame-server.vercel.app/', {
@@ -104,8 +107,8 @@ const player = new Player(100 , 200 , 'red', '')
 // }, 15)
 
 const platforms = [
-    new Platform(200, innerHeight - (50 * deviceRatio), 800, 50),
-    new Platform(400, innerHeight - (250 * deviceRatio), 50, 200),
+    new Platform(200, innerHeight - (50 * deviceRatio), 800, 50, true, true),
+    new Platform(400, innerHeight - (250 * deviceRatio), 50, 200, false),
     new Platform(450, innerHeight - (200 * deviceRatio), 300, 80),
     new Platform(900, innerHeight - (200 * deviceRatio), 200, 30),
     new Platform(1200, innerHeight - (300 * deviceRatio), 200, 30),
@@ -287,9 +290,14 @@ export function adventure(reqID) {
                 break
             }
         }
-        player.update(platforms, enermies, traps, reqID)
         platforms.forEach(platform => {
             platform.update(player)
+            if(platform.isCheckPoint) {
+                let checkPointPosition = platform.checkPointPosition
+                if(isCollide.isIn(player, checkPointPosition, true)){ 
+                    checkPoint = platform.checkPointPosition
+                }
+            }
         })
     
         enermies.forEach((enermie) => {
@@ -318,8 +326,10 @@ export function adventure(reqID) {
         })
     
         traps.forEach(trap => {
-            trap.update(player, reqID)
+            trap.update(player, reqID, checkPoint)
         })
+        player.update(platforms, enermies, traps, reqID)
+
         cvx.restore()
     
 }
