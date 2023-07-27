@@ -18,7 +18,10 @@ const deviceRatio = 1 / devicePixelRatio
 
 const player = new Player(100 , 200 , 'red', '')
 
-let checkPoint
+let checkPoint = {
+    x: 100,
+    y: 200
+}
 
 // const players = {}
 
