@@ -194,7 +194,7 @@ platforms.forEach((platform) => {
     const random = Math.round(Math.random() * 3)
     console.log(platform.isSpawn)
     if(random === 2 && platform.isSpawn) {
-        enermies.push(new Enermies(platform.x + platform.w/2, platform.y - 30, '', platform))
+        enermies.push(new Enermies(platform.x + platform.w/2, (devicePixelRatio >= 2 ? platform.y - 25 * deviceRatio : platform.y - 25), '', platform))
     }
 })
 
@@ -253,7 +253,7 @@ export function adventure(reqID) {
                 // platform.y *= 1 / devicePixelRatio
             }
         })
-        
+
         traps.forEach(trap => {
             if(device === 'mobile') {
                 trap.w *= 1 / devicePixelRatio
