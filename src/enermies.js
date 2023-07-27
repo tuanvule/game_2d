@@ -8,8 +8,8 @@ export class Enermies {
     constructor(x, y, type, platform) {
         this.x = x
         this.y = y
-        this.h = 30
-        this.w = 30
+        this.h = 25
+        this.w = 25
         this.type = type
         this.isShooting = false
         this.shootingZone = []
