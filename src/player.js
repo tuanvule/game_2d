@@ -158,7 +158,7 @@ export class Player {
 
             cancelAnimationFrame(reqID)
             died_message_text.innerHTML = message
-            died_message.style.display = 'block'
+            died_message.style.display = 'flex'
         }
 
         if(this.device === 'mobile') {

@@ -229,8 +229,13 @@ canvas {
     background: rgba(0,0,0,.4);
     width: max-content;
     padding: 10px 20px;
-    display: none;
     max-width: 80%;
+    min-width: 60%;
+    min-height: 70%;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .respawn_btn {
@@ -241,6 +246,7 @@ canvas {
     border: 1px solid #fff;
     cursor: pointer;
     font-weight: 700;
+    margin-top: 20px;
 }
 .respawn_btn:hover {
     background-color: #333;

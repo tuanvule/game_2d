@@ -40,7 +40,7 @@ export class Enermies {
 
     update(player, projectiles, platforms, difficulty) {
             this.shootingZone = this.createShootingZone(platforms)
-            this.drawShootingZone(this.shootingZone)
+            // this.drawShootingZone(this.shootingZone)
             const isShoot = this.shootingZone.some(zone => {
                 if(isCollide.isIn(player, zone)) {
                     this.outZoneCount = 0
