@@ -197,14 +197,6 @@ function handleBottomCollide(platform, player) {
 
 let delay = 0
 
-platforms.forEach((platform) => {
-    const random = Math.round(Math.random() * 3)
-    console.log(platform.isSpawn)
-    if(random === 2 && platform.isSpawn) {
-        enermies.push(new Enermies(platform.x + platform.w/2, (devicePixelRatio >= 2 ? platform.y - 25 * deviceRatio : platform.y - 25), '', platform))
-    }
-})
-
 // traps.forEach(trap => {
 //     trap.x -= 3500
 // })
@@ -217,7 +209,8 @@ platforms.forEach((platform) => {
 //     enermie.x -= 3500
 // })
 
-export function adventure(reqID) {
+export function adventure(reqID, { difficulty }) {
+
     // platform.update(player)
     // for (const id in players) {
     //     for(var i = 0; i < platforms.length; i++) { 
@@ -243,6 +236,41 @@ export function adventure(reqID) {
     
     // }
     // isPlaying=false
+
+    if(enermies.length === 0) {
+        let spawnRare
+        switch (difficulty) {
+            case 'easy':
+                spawnRare = 4
+                break;
+            case 'normal':
+                spawnRare = 3
+                break;
+            case 'hard':
+                spawnRare = 2
+                break;
+            case 'demon':
+                spawnRare = 1
+                break;
+            default:
+                break;
+        }
+        console.dir(document.querySelector('.heart-list'))
+
+        for (let index = 0; index < spawnRare; index++) {
+            let heartlist = document.querySelector('.heart-list')
+            heartlist.innerHTML += `<image class="heart" src="./texture/heart.png"/>`
+        }
+
+        platforms.forEach((platform) => {
+            const random = Math.round(Math.random() * spawnRare)
+            console.log(random)
+            if(random === 1 && platform.isSpawn) {
+                enermies.push(new Enermies(platform.x + platform.w/2, (devicePixelRatio >= 2 ? platform.y - 25 * deviceRatio : platform.y - 25), '', platform))
+            }
+        })
+    }
+
     cvx.save()
     let device = document.querySelector('.screen').name
     player.device = device
@@ -312,7 +340,7 @@ export function adventure(reqID) {
             // if(delay % 30 === 0) {
             //     enermie.isShooting = true
             // }
-            enermie.update(player, projectiles, platforms)
+            enermie.update(player, projectiles, platforms, difficulty)
             // enermie.shootingZone()
         })
     

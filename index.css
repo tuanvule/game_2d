@@ -4,6 +4,7 @@
     border: 0;
     font-size: 100%;
     font-family: 'Courier New', Courier, monospace;
+    box-sizing: border-box;
 }
 canvas {
     position: fixed;
@@ -107,12 +108,12 @@ canvas {
     align-items: center;
 }
 
-.menu_choose-device--title {
+.menu_choose--title {
     font-size: 30px;
     font-weight: 700;
 }
 
-.menu_choose-device {
+.menu_choose-device, .menu_choose-difficult {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -136,11 +137,34 @@ canvas {
     background: #eeeeee;
 }
 
+.menu_choose-difficult--chosen {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu_choose-difficult--chosen-item {
+    font-size: 20px;
+    font-weight: 600;
+    width: 50%;
+    text-align: center;
+    padding: 2px 4px;
+    margin: 4px 2px;
+    border: 1px solid blue;
+    cursor: pointer;
+}
+
+.menu_choose-difficult--chosen-item:hover {
+    background: #eeeeee;
+}
+
 .play-btn {
     font-size: 30px;
     font-weight: 600;
     width: 100px;
     padding: 4px 10px;
+    margin-top: 4px;
     border: 1px solid #ccc;
     text-align: center;
     cursor: pointer;

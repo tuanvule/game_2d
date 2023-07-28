@@ -30,6 +30,7 @@ export class Enermies {
             y: this.y
         }
         this.moveDistance = 0
+        this.shootingDelay = 60
     }
 
     draw() {
@@ -37,7 +38,7 @@ export class Enermies {
         cvx.fillRect(this.x, this.y, this.w, this.h)
     }
 
-    update(player, projectiles, platforms) {
+    update(player, projectiles, platforms, difficulty) {
             this.shootingZone = this.createShootingZone(platforms)
             // this.drawShootingZone(this.shootingZone)
             const isShoot = this.shootingZone.some(zone => {
@@ -74,12 +75,30 @@ export class Enermies {
             this.shooting(player, projectiles)
         }
         this.x+=this.velocity.x * (1 / devicePixelRatio)
+
+        switch (difficulty) {
+            case 'easy':
+                this.shootingDelay = 60
+                break;
+            case 'normal':
+                this.shootingDelay = 40
+                break;
+            case 'hard':
+                this.shootingDelay = 20
+                break;
+            case 'demon':
+                this.shootingDelay = 10
+                break;
+            default:
+                break;
+        }
+        
         this.movement(platforms)
         this.draw()
     }
 
     shooting(player, projectiles) {
-        if(this.delay % 20 === 0) {
+        if(this.delay % this.shootingDelay === 0) {
             projectiles.push(new Projectile(this.x+this.w/2, this.y+this.h/2, 10, 'red', player.x+player.w/2, player.y+player.h/2, 5))
         }
     }
