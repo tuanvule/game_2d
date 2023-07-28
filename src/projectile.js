@@ -27,6 +27,10 @@ export class Projectile {
         cvx.beginPath()
         cvx.fillStyle = this.color
         cvx.arc(this.x, this.y, this.r * (1 / devicePixelRatio), 0, 2*Math.PI)
+        console.log({
+            x: this.x,
+            vX: this.velocity.x * this.speed * this.direction * (1 / devicePixelRatio)
+        })
         this.x+=this.velocity.x * this.speed * this.direction * (1 / devicePixelRatio)
         this.y+=this.velocity.y * this.speed * (1 / devicePixelRatio)
         cvx.fill()
@@ -38,10 +42,12 @@ export class Projectile {
             this.clientX - this.position.x
         )
 
+        
         this.velocity = {
             x: Math.cos(angle),
             y: Math.sin(angle)
         }
+        // console.log(this.velocity)
         this.draw()
     }
 }

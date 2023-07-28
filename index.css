@@ -100,12 +100,32 @@ canvas {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 30%;
+    width: 60%;
     height: 70%;
     background: #fff;
     display: flex;
+    /* flex-direction: column; */
+    /* align-items: center; */
+    justify-content: center;
+}
+
+.menu_game-title {
+    position: absolute;
+    font-size: 40px;
+    font-weight: 700;
+    top: 2%;
+}
+
+.menu__setting {
+    display: flex;
     flex-direction: column;
     align-items: center;
+    /* justify-content: space-between; */
+    width: 55%;
+    margin-top: 10%;
+    padding-top: 5px;
+    border-right: 1px solid blue;
+    border-top: 1px solid blue;
 }
 
 .menu_choose--title {
@@ -116,25 +136,35 @@ canvas {
 .menu_choose-device, .menu_choose-difficult {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .menu_choose-device .menu_choose-device--chosen {
     font-size: 20px;
     font-weight: 600;
     display: flex;
+    justify-content: space-around;
 }
 
 .menu_choose-device .menu_choose-device--chosen div {
-    margin: 10px 20px;
-    padding: 4px 10px;
+    margin: 10px 3px;
+    padding: 4px 5px;
     border: 1px solid blue;
     cursor: pointer;
 }
 
 .menu_choose-device .menu_choose-device--chosen div:hover {
     background: #eeeeee;
+}
+
+.menu_choose-difficult {
+    /* display: flex; */
+    margin-top: 10%;
+    padding-top: 5px;
+    border-left: 1px solid blue;
+    border-top: 1px solid blue;
 }
 
 .menu_choose-difficult--chosen {
@@ -164,7 +194,7 @@ canvas {
     font-weight: 600;
     width: 100px;
     padding: 4px 10px;
-    margin-top: 4px;
+    margin-top: 20px;
     border: 1px solid #ccc;
     text-align: center;
     cursor: pointer;
@@ -188,7 +218,7 @@ canvas {
 }
 
 .died_message h1 {
-    font-size: 100px;
+    font-size: 250%;
 }
 
 .died_message {
@@ -198,8 +228,9 @@ canvas {
     transform: translate(-50%, -50%);
     background: rgba(0,0,0,.4);
     width: max-content;
-    padding: 100px 200px;
+    padding: 10px 20px;
     display: none;
+    max-width: 80%;
 }
 
 .respawn_btn {

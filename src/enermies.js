@@ -40,7 +40,7 @@ export class Enermies {
 
     update(player, projectiles, platforms, difficulty) {
             this.shootingZone = this.createShootingZone(platforms)
-            // this.drawShootingZone(this.shootingZone)
+            this.drawShootingZone(this.shootingZone)
             const isShoot = this.shootingZone.some(zone => {
                 if(isCollide.isIn(player, zone)) {
                     this.outZoneCount = 0
@@ -99,7 +99,8 @@ export class Enermies {
 
     shooting(player, projectiles) {
         if(this.delay % this.shootingDelay === 0) {
-            projectiles.push(new Projectile(this.x+this.w/2, this.y+this.h/2, 10, 'red', player.x+player.w/2, player.y+player.h/2, 5))
+            // console.log(this.x+this.w/2, this.y+this.h/2, player.x+player.w/2, player.y+player.h/2)
+            projectiles.push(new Projectile(this.x+this.w/2 - 2, this.y+this.h/2 - 2, 10, 'red', player.x+player.w/2, player.y+player.h/2, 5))
         }
     }
 

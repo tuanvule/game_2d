@@ -44,7 +44,7 @@ export class Player {
         }
     }
 
-    update(platforms, enermies, traps, reqID) {
+    update(platforms, enermies, traps, reqID, difficulty) {
         this.delay++
         if(this.y + this.velocity.y<=innerHeight-this.h && !this.isLanding) {
             this.velocity.y+=this.gravity
@@ -135,9 +135,30 @@ export class Player {
         // }
 
         if(!document.querySelector('.heart')) {
+            const died_message = document.querySelector('.died_message')
+            const died_message_text = document.querySelector('.died_message h1')
+            let message
             // console.log('eeew')
+            switch (difficulty) {
+                case 'easy':
+                    message = 'Really? sao m chết đc hay vậy'
+                    break;
+                case 'normal':
+                    message = 'VL thế cũng chết đc'
+                    break;
+                case 'hard':
+                    message = 'Non'
+                    break;
+                case 'demon':
+                    message = 'Non vl'
+                    break;
+                default:
+                    break;
+            }
+
             cancelAnimationFrame(reqID)
-            document.querySelector('.died_message').style.display = 'block'
+            died_message_text.innerHTML = message
+            died_message.style.display = 'block'
         }
 
         if(this.device === 'mobile') {

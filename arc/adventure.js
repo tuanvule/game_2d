@@ -347,14 +347,17 @@ export function adventure(reqID, { difficulty }) {
         projectiles.forEach((projectile, index) => {
             projectile.update(player)
             if(isCollide.isOutOfScreen(projectile)|| projectiles.length >=10) {
+                console.log('qweqwe1')
                 projectiles.splice(index, 1)
             } 
             platforms.forEach(platform => {
                 if(isCollide.isIn(projectile, platform)) {
+                    console.log('qweqwe2')
                     projectiles.splice(index, 1)
                 }
             })
             if(isCollide.isIn(projectile, player)) {
+                console.log('qweqwe3')
                 player.devideHeart()
                 projectiles.splice(index, 1)
             }
@@ -363,8 +366,8 @@ export function adventure(reqID, { difficulty }) {
         traps.forEach(trap => {
             trap.update(player, reqID, checkPoint, platforms, enermies, traps)
         })
-        player.update(platforms, enermies, traps, reqID)
+        player.update(platforms, enermies, traps, reqID, difficulty)
 
         cvx.restore()
-    
+    console.log(projectiles)
 }

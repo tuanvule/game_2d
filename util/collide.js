@@ -83,7 +83,7 @@ function isIn(item1, item2, isDebug) {
             (item1.x + item1.r > item2.x &&
                 item1.x < item2.x + item2.w &&
                 item1.y < item2.y + item2.h &&
-                item1.y + item1.r > item2.y)
+                item1.y > item2.y)
         ) {
         
         return true

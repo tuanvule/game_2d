@@ -53,9 +53,6 @@ export class Platform {
         // }
 
         // console.log(checkPoint, this.checkPointPosition)
-        if(checkPoint && checkPoint.id === this.checkPointPosition.id) {
-            console.log(this.checkPointPosition.checkPointMoveDistance)
-        }
         
         if(this.isMoveLeft) {
             this.x -= 4* (1 / devicePixelRatio)
