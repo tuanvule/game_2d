@@ -2,7 +2,7 @@ const cv = document.querySelector('#canvas')
 const cvx = cv.getContext('2d')
 
 export class Platform {
-    constructor(x, y, w, h, isSpawn = true, isCheckPoint = false) {
+    constructor(x, y, w, h, isSpawn = true, checkPoint = {isCheckPoint: false, id: null}) {
         this.w = w
         this.h = h
         this.x = x
@@ -10,25 +10,29 @@ export class Platform {
         this.isMoveLeft = false
         this.isMoveRight = false
         this.isSpawn = isSpawn
-        this.isCheckPoint = isCheckPoint
+        this.checkPoint = checkPoint
         this.checkPointPosition = {}
+        this.moveDistance = 0
     }
     
     draw() {
         cvx.fillStyle = 'blue'
         cvx.fillRect(this.x, this.y, this.w, this.h)
-        if(this.isCheckPoint) {
+        if(this.checkPoint.isCheckPoint) {
             this.checkPointPosition = {
-                x: this.x + this.w - 50,
+                x: this.x + this.w - 100,
                 y: this.y - 50,
                 w: 30,
-                h: 50
+                h: 50,
+                id: this.checkPoint.id,
+                checkPointMoveDistance: this.moveDistance
             }
-            let gradient = cvx.createLinearGradient(this.x + this.w - 50, this.y - 50, this.x + this.w - 50 + 30, this.y - 50 + 80);
+            // console.log(this.checkPointPosition)
+            let gradient = cvx.createLinearGradient(this.x + this.w - 100, this.y - 50, this.x + this.w - 50 + 30, this.y - 50 + 80);
             gradient.addColorStop(0, "rgba(249, 231, 148,1)");
             gradient.addColorStop(1, "rgba(246, 190, 212,1)");
             cvx.fillStyle = gradient;
-            cvx.fillRect(this.x + this.w - 50, this.y - 50, 30, 50);
+            cvx.fillRect(this.x + this.w - 100, this.y - 50, 30, 50);
             // cvx.fillStyle = 'red';
             // cvx.fillRect(this.x + this.w - 50, this.y - 50, 5, 5);
         }
@@ -39,7 +43,7 @@ export class Platform {
         // cvx.fillRect(this.hp_x, this.hp_y, this.hp_w, this.hp_h)
     }
 
-    update(player) {
+    update(player, checkPoint) {
         
         // if(this.hp_w - 40 <= 0) {
         //     this.hp_w = 0
@@ -47,11 +51,30 @@ export class Platform {
         //     console.log('asd')
         //     this.hp_w -=40
         // }
+
+        // console.log(checkPoint, this.checkPointPosition)
+        if(checkPoint && checkPoint.id === this.checkPointPosition.id) {
+            console.log(this.checkPointPosition.checkPointMoveDistance)
+        }
+        
         if(this.isMoveLeft) {
             this.x -= 4* (1 / devicePixelRatio)
+            this.moveDistance -= 4* (1 / devicePixelRatio)
+            this.checkPointPosition.x = this.moveDistance
+            if(checkPoint && checkPoint.id === this.checkPointPosition.id) {
+                checkPoint.x = this.checkPointPosition.x
+
+                console.log(checkPoint.x, this.checkPointPosition.x, this.moveDistance, '=============================')
+            }
         }
         if (this.isMoveRight) {
             this.x += 4* (1 / devicePixelRatio)
+            this.moveDistance += 4* (1 / devicePixelRatio)
+            this.checkPointPosition.x = this.moveDistance
+            if(checkPoint && checkPoint.id === this.checkPointPosition.id) {
+                checkPoint.x = this.checkPointPosition.x
+                // console.log(checkPoint, this.checkPointPosition, '=============================')
+            }
         }
         this.hp = (this.hp_w / (innerWidth - this.hp_x*2)) * 100
         this.draw()

@@ -14,6 +14,7 @@ export class Trap{
         this.isMoveRight = false
         this.isDrop = false
         this.dropDelay = 0
+        this.moveDistance = 0
     }
 
     draw(player) {
@@ -47,14 +48,52 @@ export class Trap{
         }
     }
 
-    update(player, isPlaying, checkPoint) {
-        if (this.type === 'lava') {
-            if(isCollide.isStand(player, {x: this.x, y: this.y, w: this.w, h: this.h})) {
-                player.deviceHeart()
-                if(checkPoint) {
+    update(player, isPlaying, checkPoint, platforms, enermies, traps) {
+        if (this.type === 'lava') { 
+            if(isCollide.isIn(player, {x: this.x, y: this.y, w: this.w, h: this.h})) {
+                player.devideHeart()
+                if(checkPoint) {         
+                    platforms.forEach(platform => {
+                        console.log('1',platform.x)
+                        platform.moveDistance -= checkPoint.checkPointMoveDistance
+                        platform.x -= platform.moveDistance
+                        if(platform.checkPointPosition.id === checkPoint.id) {
+                            console.log(platform.checkPointPosition.x)
+                            checkPoint.x = platform.x + platform.w - 100
+                            // platform.moveDistance = 0
+                        }
+                    });
+                    enermies.forEach(enermie => {
+                        enermie.moveDistance -= checkPoint.checkPointMoveDistance
+                        enermie.x -= enermie.moveDistance
+                    });
+                    traps.forEach(trap => {
+                        trap.moveDistance -= checkPoint.checkPointMoveDistance
+                        trap.x -= trap.moveDistance
+                    });
                     player.x = checkPoint.x
                     player.y = checkPoint.y
                     player.velocity.y = 0
+                    player.velocity.x = 0    
+                    console.log(player.x)       
+                    checkPoint.checkPointMoveDistance = 0
+                } else {
+                    player.x = 100
+                    player.y = 200
+                    player.velocity.y = 0
+
+                    platforms.forEach(platform => {
+                        platform.x -= platform.moveDistance
+                        platform.moveDistance = 0
+                    });
+                    enermies.forEach(enermie => {
+                        enermie.x -= enermie.moveDistance
+                        enermie.moveDistance = 0
+                    });
+                    traps.forEach(trap => {
+                        trap.x -= trap.moveDistance
+                        trap.moveDistance = 0
+                    });
                 }
             } 
         } else if(this.type === 'drop') {
@@ -63,9 +102,11 @@ export class Trap{
 
         if(this.isMoveLeft) {
             this.x -= 4* (1 / devicePixelRatio)
+            this.moveDistance -= 4* (1 / devicePixelRatio)
         }
         if (this.isMoveRight) {
             this.x += 4* (1 / devicePixelRatio)
+            this.moveDistance += 4* (1 / devicePixelRatio)
         }
 
         this.draw(player)

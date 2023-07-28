@@ -29,6 +29,7 @@ export class Enermies {
             x: this.x,
             y: this.y
         }
+        this.moveDistance = 0
     }
 
     draw() {
@@ -54,12 +55,14 @@ export class Enermies {
 
             if(this.isMoveLeft) {
                 this.x -= 4 * (1 / devicePixelRatio)
+                this.moveDistance -= 4 * (1 / devicePixelRatio)
                 this.shootingZone.forEach(zone => {
                     zone.x -=4 * (1 / devicePixelRatio)
                 })
             }
             if (this.isMoveRight) {
                 this.x += 4 * (1 / devicePixelRatio)
+                this.moveDistance += 4 * (1 / devicePixelRatio)
                 this.shootingZone.forEach(zone => {
                     zone.x +=4 * (1 / devicePixelRatio)
                 })

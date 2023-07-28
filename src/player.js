@@ -235,7 +235,7 @@ export class Player {
         cvx.drawImage(img, 0, 0, 100, 200, this.sw_x, this.sw_y, this.sw_w, this.sw_h)
     }
 
-    deviceHeart() {
+    devideHeart() {
         if(document.querySelector('.heart')) {
             const heartList = document.querySelector('.heart-list')
             console.log(heartList.children[heartList.children.length - 1])

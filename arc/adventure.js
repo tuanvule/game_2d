@@ -18,10 +18,7 @@ const deviceRatio = 1 / devicePixelRatio
 
 const player = new Player(100 , 200 , 'red', '')
 
-let checkPoint = {
-    x: 100,
-    y: 200
-}
+let checkPoint
 
 // const players = {}
 
@@ -110,7 +107,7 @@ let checkPoint = {
 // }, 15)
 
 const platforms = [
-    new Platform(200, innerHeight - (50 * deviceRatio), 800, 50, true, true),
+    new Platform(200, innerHeight - (50 * deviceRatio), 800, 50, true, {isCheckPoint: true, id: 1}),
     new Platform(400, innerHeight - (250 * deviceRatio), 50, 200, false),
     new Platform(450, innerHeight - (200 * deviceRatio), 300, 80),
     new Platform(900, innerHeight - (200 * deviceRatio), 200, 30),
@@ -294,13 +291,13 @@ export function adventure(reqID) {
             }
         }
         platforms.forEach(platform => {
-            platform.update(player)
-            if(platform.isCheckPoint) {
+            if(platform.checkPoint.isCheckPoint) {
                 let checkPointPosition = platform.checkPointPosition
                 if(isCollide.isIn(player, checkPointPosition, true)){ 
                     checkPoint = platform.checkPointPosition
                 }
             }
+            platform.update(player, checkPoint)
         })
     
         enermies.forEach((enermie) => {
@@ -323,13 +320,13 @@ export function adventure(reqID) {
                 }
             })
             if(isCollide.isIn(projectile, player)) {
-                player.deviceHeart()
+                // player.devideHeart()
                 projectiles.splice(index, 1)
             }
         })
     
         traps.forEach(trap => {
-            trap.update(player, reqID, checkPoint)
+            trap.update(player, reqID, checkPoint, platforms, enermies, traps)
         })
         player.update(platforms, enermies, traps, reqID)
 

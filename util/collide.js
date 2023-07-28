@@ -73,7 +73,7 @@ function isBlocked() {
 
 function isIn(item1, item2, isDebug) {
     if(isDebug) {
-            console.log(item1, item2)
+            // console.log(item1, item2)
         }
     if (
         (item1.x + item1.w > item2.x &&
