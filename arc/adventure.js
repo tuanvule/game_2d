@@ -20,6 +20,7 @@ const player = new Player(100 , 200 , 'red', '')
 const respawnBtn = document.querySelector('.respawn_btn')
 
 respawnBtn.onclick = () => {
+    console.log('reload')
     if(!document.querySelector('.heart')) {
         window.location.reload()
     }

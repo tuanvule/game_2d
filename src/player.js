@@ -156,6 +156,8 @@ export class Player {
                     break;
             }
 
+            document.exitFullscreen()
+
             cancelAnimationFrame(reqID)
             died_message_text.innerHTML = message
             died_message.style.display = 'flex'

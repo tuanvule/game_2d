@@ -15,6 +15,10 @@ canvas {
     width: 100%;
 }
 
+canvas::backdrop {
+    background-color: rgba(255,255,255,0);
+}
+
 .movement-body {
     display: none
 }
@@ -101,7 +105,7 @@ canvas {
     left: 50%;
     transform: translate(-50%, -50%);
     width: 60%;
-    height: 70%;
+    height: 80%;
     background: #fff;
     display: flex;
     /* flex-direction: column; */

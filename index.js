@@ -53,8 +53,6 @@ animation()
 
 
 
-
-
 function build(saveSetting) {
     if(saveSetting.device === 'mobile') {
         movementBody.style.display = 'block'
@@ -114,6 +112,7 @@ playBtn.onclick = () => {
     if(saveSetting.device && saveSetting.difficulty) {
         build(saveSetting)
         screen.style.display = 'none'
+        cv.requestFullscreen()
         animation()
     }
 }
