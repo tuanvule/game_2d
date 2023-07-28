@@ -17,6 +17,13 @@ const cvx = cv.getContext('2d')
 const deviceRatio = 1 / devicePixelRatio
 
 const player = new Player(100 , 200 , 'red', '')
+const respawnBtn = document.querySelector('.respawn_btn')
+
+respawnBtn.onclick = () => {
+    if(!document.querySelector('.heart')) {
+        window.location.reload()
+    }
+}
 
 let checkPoint
 
@@ -320,7 +327,7 @@ export function adventure(reqID) {
                 }
             })
             if(isCollide.isIn(projectile, player)) {
-                // player.devideHeart()
+                player.devideHeart()
                 projectiles.splice(index, 1)
             }
         })
